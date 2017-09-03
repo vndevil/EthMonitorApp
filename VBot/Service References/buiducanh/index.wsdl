@@ -1,0 +1,1422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="UpdateStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateStatusResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddNewsletter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fullName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gender" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddNewsletterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddNewsletterResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUsername">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUsernameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckUsernameResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckEmailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Logout">
+        <s:complexType />
+      </s:element>
+      <s:element name="LogoutResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddToCart">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="quantity" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="addOne" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddToCartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddToCartResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCart">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="quantity" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateCartResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveCart">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveCartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveCartResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetItemFromCart">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetItemFromCartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetItemFromCartResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductFromCart">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetProductFromCartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductFromCartResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMoneyFromCart">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMoneyFromCartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMoneyFromCartResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="productId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMenuDetail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="category1Id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMenuDetailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMenuDetailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetThietBi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="categoryId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="language" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetThietBiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetThietBiResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateTag">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="createdby" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="language" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateTagResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateTagResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEthMan">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="data" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEthManResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="InsertMiner">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="miner" type="tns:MinerInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MinerInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="EmailId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ip" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RunningTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EthereumStats" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GpuTemperature" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Pool" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comments" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DcrInfo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="InsertMinerResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="UpdateStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateStatus" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddNewsletterSoapIn">
+    <wsdl:part name="parameters" element="tns:AddNewsletter" />
+  </wsdl:message>
+  <wsdl:message name="AddNewsletterSoapOut">
+    <wsdl:part name="parameters" element="tns:AddNewsletterResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckUsernameSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckUsername" />
+  </wsdl:message>
+  <wsdl:message name="CheckUsernameSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckUsernameResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckEmail" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddToCartSoapIn">
+    <wsdl:part name="parameters" element="tns:AddToCart" />
+  </wsdl:message>
+  <wsdl:message name="AddToCartSoapOut">
+    <wsdl:part name="parameters" element="tns:AddToCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCartSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCart" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCartSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCartSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveCart" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCartSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetItemFromCartSoapIn">
+    <wsdl:part name="parameters" element="tns:GetItemFromCart" />
+  </wsdl:message>
+  <wsdl:message name="GetItemFromCartSoapOut">
+    <wsdl:part name="parameters" element="tns:GetItemFromCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductFromCartSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductFromCart" />
+  </wsdl:message>
+  <wsdl:message name="GetProductFromCartSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductFromCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMoneyFromCartSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMoneyFromCart" />
+  </wsdl:message>
+  <wsdl:message name="GetMoneyFromCartSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMoneyFromCartResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductName" />
+  </wsdl:message>
+  <wsdl:message name="GetProductNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMenuDetailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMenuDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetMenuDetailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMenuDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetThietBiSoapIn">
+    <wsdl:part name="parameters" element="tns:GetThietBi" />
+  </wsdl:message>
+  <wsdl:message name="GetThietBiSoapOut">
+    <wsdl:part name="parameters" element="tns:GetThietBiResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateTagSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateTag" />
+  </wsdl:message>
+  <wsdl:message name="CreateTagSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateTagResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEthManSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEthMan" />
+  </wsdl:message>
+  <wsdl:message name="GetEthManSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEthManResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertMinerSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertMiner" />
+  </wsdl:message>
+  <wsdl:message name="InsertMinerSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertMinerResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStatusHttpGetIn">
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="value" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStatusHttpGetOut" />
+  <wsdl:message name="AddNewsletterHttpGetIn">
+    <wsdl:part name="fullName" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="gender" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddNewsletterHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CheckUsernameHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckUsernameHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailHttpGetIn">
+    <wsdl:part name="email" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="LogoutHttpGetIn" />
+  <wsdl:message name="LogoutHttpGetOut" />
+  <wsdl:message name="AddToCartHttpGetIn">
+    <wsdl:part name="productId" type="s:string" />
+    <wsdl:part name="quantity" type="s:string" />
+    <wsdl:part name="addOne" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToCartHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCartHttpGetIn">
+    <wsdl:part name="productId" type="s:string" />
+    <wsdl:part name="quantity" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCartHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCartHttpGetIn">
+    <wsdl:part name="productId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCartHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetItemFromCartHttpGetIn" />
+  <wsdl:message name="GetItemFromCartHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProductFromCartHttpGetIn" />
+  <wsdl:message name="GetProductFromCartHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMoneyFromCartHttpGetIn" />
+  <wsdl:message name="GetMoneyFromCartHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProductNameHttpGetIn">
+    <wsdl:part name="productId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProductNameHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMenuDetailHttpGetIn">
+    <wsdl:part name="itemId" type="s:string" />
+    <wsdl:part name="category1Id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMenuDetailHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetThietBiHttpGetIn">
+    <wsdl:part name="categoryId" type="s:string" />
+    <wsdl:part name="language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetThietBiHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateTagHttpGetIn">
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="createdby" type="s:string" />
+    <wsdl:part name="language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateTagHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEthManHttpGetIn">
+    <wsdl:part name="data" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEthManHttpGetOut" />
+  <wsdl:message name="UpdateStatusHttpPostIn">
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="value" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateStatusHttpPostOut" />
+  <wsdl:message name="AddNewsletterHttpPostIn">
+    <wsdl:part name="fullName" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="gender" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddNewsletterHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CheckUsernameHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckUsernameHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailHttpPostIn">
+    <wsdl:part name="email" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="LoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="LogoutHttpPostIn" />
+  <wsdl:message name="LogoutHttpPostOut" />
+  <wsdl:message name="AddToCartHttpPostIn">
+    <wsdl:part name="productId" type="s:string" />
+    <wsdl:part name="quantity" type="s:string" />
+    <wsdl:part name="addOne" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddToCartHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCartHttpPostIn">
+    <wsdl:part name="productId" type="s:string" />
+    <wsdl:part name="quantity" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCartHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCartHttpPostIn">
+    <wsdl:part name="productId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveCartHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetItemFromCartHttpPostIn" />
+  <wsdl:message name="GetItemFromCartHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProductFromCartHttpPostIn" />
+  <wsdl:message name="GetProductFromCartHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMoneyFromCartHttpPostIn" />
+  <wsdl:message name="GetMoneyFromCartHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProductNameHttpPostIn">
+    <wsdl:part name="productId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetProductNameHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMenuDetailHttpPostIn">
+    <wsdl:part name="itemId" type="s:string" />
+    <wsdl:part name="category1Id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMenuDetailHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetThietBiHttpPostIn">
+    <wsdl:part name="categoryId" type="s:string" />
+    <wsdl:part name="language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetThietBiHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateTagHttpPostIn">
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="createdby" type="s:string" />
+    <wsdl:part name="language" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateTagHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEthManHttpPostIn">
+    <wsdl:part name="data" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetEthManHttpPostOut" />
+  <wsdl:portType name="IndexSoap">
+    <wsdl:operation name="UpdateStatus">
+      <wsdl:input message="tns:UpdateStatusSoapIn" />
+      <wsdl:output message="tns:UpdateStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletter">
+      <wsdl:input message="tns:AddNewsletterSoapIn" />
+      <wsdl:output message="tns:AddNewsletterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUsername">
+      <wsdl:input message="tns:CheckUsernameSoapIn" />
+      <wsdl:output message="tns:CheckUsernameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmail">
+      <wsdl:input message="tns:CheckEmailSoapIn" />
+      <wsdl:output message="tns:CheckEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input message="tns:LogoutSoapIn" />
+      <wsdl:output message="tns:LogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToCart">
+      <wsdl:input message="tns:AddToCartSoapIn" />
+      <wsdl:output message="tns:AddToCartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCart">
+      <wsdl:input message="tns:UpdateCartSoapIn" />
+      <wsdl:output message="tns:UpdateCartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCart">
+      <wsdl:input message="tns:RemoveCartSoapIn" />
+      <wsdl:output message="tns:RemoveCartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemFromCart">
+      <wsdl:input message="tns:GetItemFromCartSoapIn" />
+      <wsdl:output message="tns:GetItemFromCartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductFromCart">
+      <wsdl:input message="tns:GetProductFromCartSoapIn" />
+      <wsdl:output message="tns:GetProductFromCartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyFromCart">
+      <wsdl:input message="tns:GetMoneyFromCartSoapIn" />
+      <wsdl:output message="tns:GetMoneyFromCartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductName">
+      <wsdl:input message="tns:GetProductNameSoapIn" />
+      <wsdl:output message="tns:GetProductNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuDetail">
+      <wsdl:input message="tns:GetMenuDetailSoapIn" />
+      <wsdl:output message="tns:GetMenuDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetThietBi">
+      <wsdl:input message="tns:GetThietBiSoapIn" />
+      <wsdl:output message="tns:GetThietBiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTag">
+      <wsdl:input message="tns:CreateTagSoapIn" />
+      <wsdl:output message="tns:CreateTagSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEthMan">
+      <wsdl:input message="tns:GetEthManSoapIn" />
+      <wsdl:output message="tns:GetEthManSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertMiner">
+      <wsdl:input message="tns:InsertMinerSoapIn" />
+      <wsdl:output message="tns:InsertMinerSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IndexHttpGet">
+    <wsdl:operation name="UpdateStatus">
+      <wsdl:input message="tns:UpdateStatusHttpGetIn" />
+      <wsdl:output message="tns:UpdateStatusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletter">
+      <wsdl:input message="tns:AddNewsletterHttpGetIn" />
+      <wsdl:output message="tns:AddNewsletterHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUsername">
+      <wsdl:input message="tns:CheckUsernameHttpGetIn" />
+      <wsdl:output message="tns:CheckUsernameHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmail">
+      <wsdl:input message="tns:CheckEmailHttpGetIn" />
+      <wsdl:output message="tns:CheckEmailHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginHttpGetIn" />
+      <wsdl:output message="tns:LoginHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input message="tns:LogoutHttpGetIn" />
+      <wsdl:output message="tns:LogoutHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToCart">
+      <wsdl:input message="tns:AddToCartHttpGetIn" />
+      <wsdl:output message="tns:AddToCartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCart">
+      <wsdl:input message="tns:UpdateCartHttpGetIn" />
+      <wsdl:output message="tns:UpdateCartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCart">
+      <wsdl:input message="tns:RemoveCartHttpGetIn" />
+      <wsdl:output message="tns:RemoveCartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemFromCart">
+      <wsdl:input message="tns:GetItemFromCartHttpGetIn" />
+      <wsdl:output message="tns:GetItemFromCartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductFromCart">
+      <wsdl:input message="tns:GetProductFromCartHttpGetIn" />
+      <wsdl:output message="tns:GetProductFromCartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyFromCart">
+      <wsdl:input message="tns:GetMoneyFromCartHttpGetIn" />
+      <wsdl:output message="tns:GetMoneyFromCartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductName">
+      <wsdl:input message="tns:GetProductNameHttpGetIn" />
+      <wsdl:output message="tns:GetProductNameHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuDetail">
+      <wsdl:input message="tns:GetMenuDetailHttpGetIn" />
+      <wsdl:output message="tns:GetMenuDetailHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetThietBi">
+      <wsdl:input message="tns:GetThietBiHttpGetIn" />
+      <wsdl:output message="tns:GetThietBiHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTag">
+      <wsdl:input message="tns:CreateTagHttpGetIn" />
+      <wsdl:output message="tns:CreateTagHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEthMan">
+      <wsdl:input message="tns:GetEthManHttpGetIn" />
+      <wsdl:output message="tns:GetEthManHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IndexHttpPost">
+    <wsdl:operation name="UpdateStatus">
+      <wsdl:input message="tns:UpdateStatusHttpPostIn" />
+      <wsdl:output message="tns:UpdateStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletter">
+      <wsdl:input message="tns:AddNewsletterHttpPostIn" />
+      <wsdl:output message="tns:AddNewsletterHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUsername">
+      <wsdl:input message="tns:CheckUsernameHttpPostIn" />
+      <wsdl:output message="tns:CheckUsernameHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmail">
+      <wsdl:input message="tns:CheckEmailHttpPostIn" />
+      <wsdl:output message="tns:CheckEmailHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginHttpPostIn" />
+      <wsdl:output message="tns:LoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input message="tns:LogoutHttpPostIn" />
+      <wsdl:output message="tns:LogoutHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToCart">
+      <wsdl:input message="tns:AddToCartHttpPostIn" />
+      <wsdl:output message="tns:AddToCartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCart">
+      <wsdl:input message="tns:UpdateCartHttpPostIn" />
+      <wsdl:output message="tns:UpdateCartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCart">
+      <wsdl:input message="tns:RemoveCartHttpPostIn" />
+      <wsdl:output message="tns:RemoveCartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemFromCart">
+      <wsdl:input message="tns:GetItemFromCartHttpPostIn" />
+      <wsdl:output message="tns:GetItemFromCartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductFromCart">
+      <wsdl:input message="tns:GetProductFromCartHttpPostIn" />
+      <wsdl:output message="tns:GetProductFromCartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyFromCart">
+      <wsdl:input message="tns:GetMoneyFromCartHttpPostIn" />
+      <wsdl:output message="tns:GetMoneyFromCartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductName">
+      <wsdl:input message="tns:GetProductNameHttpPostIn" />
+      <wsdl:output message="tns:GetProductNameHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuDetail">
+      <wsdl:input message="tns:GetMenuDetailHttpPostIn" />
+      <wsdl:output message="tns:GetMenuDetailHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetThietBi">
+      <wsdl:input message="tns:GetThietBiHttpPostIn" />
+      <wsdl:output message="tns:GetThietBiHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTag">
+      <wsdl:input message="tns:CreateTagHttpPostIn" />
+      <wsdl:output message="tns:CreateTagHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEthMan">
+      <wsdl:input message="tns:GetEthManHttpPostIn" />
+      <wsdl:output message="tns:GetEthManHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IndexSoap" type="tns:IndexSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdateStatus">
+      <soap:operation soapAction="http://tempuri.org/UpdateStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletter">
+      <soap:operation soapAction="http://tempuri.org/AddNewsletter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUsername">
+      <soap:operation soapAction="http://tempuri.org/CheckUsername" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmail">
+      <soap:operation soapAction="http://tempuri.org/CheckEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToCart">
+      <soap:operation soapAction="http://tempuri.org/AddToCart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCart">
+      <soap:operation soapAction="http://tempuri.org/UpdateCart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCart">
+      <soap:operation soapAction="http://tempuri.org/RemoveCart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemFromCart">
+      <soap:operation soapAction="http://tempuri.org/GetItemFromCart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductFromCart">
+      <soap:operation soapAction="http://tempuri.org/GetProductFromCart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyFromCart">
+      <soap:operation soapAction="http://tempuri.org/GetMoneyFromCart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductName">
+      <soap:operation soapAction="http://tempuri.org/GetProductName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuDetail">
+      <soap:operation soapAction="http://tempuri.org/GetMenuDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThietBi">
+      <soap:operation soapAction="http://tempuri.org/GetThietBi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTag">
+      <soap:operation soapAction="http://tempuri.org/CreateTag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEthMan">
+      <soap:operation soapAction="http://tempuri.org/GetEthMan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertMiner">
+      <soap:operation soapAction="http://tempuri.org/InsertMiner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IndexSoap12" type="tns:IndexSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdateStatus">
+      <soap12:operation soapAction="http://tempuri.org/UpdateStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletter">
+      <soap12:operation soapAction="http://tempuri.org/AddNewsletter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUsername">
+      <soap12:operation soapAction="http://tempuri.org/CheckUsername" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmail">
+      <soap12:operation soapAction="http://tempuri.org/CheckEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://tempuri.org/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddToCart">
+      <soap12:operation soapAction="http://tempuri.org/AddToCart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCart">
+      <soap12:operation soapAction="http://tempuri.org/UpdateCart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCart">
+      <soap12:operation soapAction="http://tempuri.org/RemoveCart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemFromCart">
+      <soap12:operation soapAction="http://tempuri.org/GetItemFromCart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductFromCart">
+      <soap12:operation soapAction="http://tempuri.org/GetProductFromCart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyFromCart">
+      <soap12:operation soapAction="http://tempuri.org/GetMoneyFromCart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductName">
+      <soap12:operation soapAction="http://tempuri.org/GetProductName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuDetail">
+      <soap12:operation soapAction="http://tempuri.org/GetMenuDetail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThietBi">
+      <soap12:operation soapAction="http://tempuri.org/GetThietBi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTag">
+      <soap12:operation soapAction="http://tempuri.org/CreateTag" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEthMan">
+      <soap12:operation soapAction="http://tempuri.org/GetEthMan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertMiner">
+      <soap12:operation soapAction="http://tempuri.org/InsertMiner" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IndexHttpGet" type="tns:IndexHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="UpdateStatus">
+      <http:operation location="/UpdateStatus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletter">
+      <http:operation location="/AddNewsletter" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUsername">
+      <http:operation location="/CheckUsername" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmail">
+      <http:operation location="/CheckEmail" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <http:operation location="/Login" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <http:operation location="/Logout" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="AddToCart">
+      <http:operation location="/AddToCart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCart">
+      <http:operation location="/UpdateCart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCart">
+      <http:operation location="/RemoveCart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemFromCart">
+      <http:operation location="/GetItemFromCart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductFromCart">
+      <http:operation location="/GetProductFromCart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyFromCart">
+      <http:operation location="/GetMoneyFromCart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductName">
+      <http:operation location="/GetProductName" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuDetail">
+      <http:operation location="/GetMenuDetail" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThietBi">
+      <http:operation location="/GetThietBi" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTag">
+      <http:operation location="/CreateTag" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEthMan">
+      <http:operation location="/GetEthMan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IndexHttpPost" type="tns:IndexHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="UpdateStatus">
+      <http:operation location="/UpdateStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="AddNewsletter">
+      <http:operation location="/AddNewsletter" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUsername">
+      <http:operation location="/CheckUsername" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmail">
+      <http:operation location="/CheckEmail" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <http:operation location="/Login" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <http:operation location="/Logout" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="AddToCart">
+      <http:operation location="/AddToCart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCart">
+      <http:operation location="/UpdateCart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveCart">
+      <http:operation location="/RemoveCart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemFromCart">
+      <http:operation location="/GetItemFromCart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductFromCart">
+      <http:operation location="/GetProductFromCart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMoneyFromCart">
+      <http:operation location="/GetMoneyFromCart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductName">
+      <http:operation location="/GetProductName" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuDetail">
+      <http:operation location="/GetMenuDetail" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetThietBi">
+      <http:operation location="/GetThietBi" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTag">
+      <http:operation location="/CreateTag" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEthMan">
+      <http:operation location="/GetEthMan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Index">
+    <wsdl:port name="IndexSoap" binding="tns:IndexSoap">
+      <soap:address location="https://www.buiducanh.net/Webservices/index.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IndexSoap12" binding="tns:IndexSoap12">
+      <soap12:address location="https://www.buiducanh.net/Webservices/index.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IndexHttpGet" binding="tns:IndexHttpGet">
+      <http:address location="https://www.buiducanh.net/Webservices/index.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IndexHttpPost" binding="tns:IndexHttpPost">
+      <http:address location="https://www.buiducanh.net/Webservices/index.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
