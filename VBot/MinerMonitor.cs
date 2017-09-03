@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using Fizzler.Systems.HtmlAgilityPack;
+using Newtonsoft.Json;
 using VBot.buiducanh;
 
 namespace VBot
@@ -21,7 +22,7 @@ namespace VBot
         {
             InitializeComponent();
 
-            thMonitor = new Thread(GetData) {IsBackground = true};
+            thMonitor = new Thread(GetData) { IsBackground = true };
         }
 
         private void GetData()
@@ -30,8 +31,10 @@ namespace VBot
             {
                 while (true)
                 {
-                    var content = client.DownloadString("http://localhost").Replace("<FONT COLOR=\"#000000\">", string.Empty);
-                    //var content = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "test.txt").Replace("<FONT COLOR=\"#000000\">", string.Empty);
+                    var host = txtHost.Text.Replace("http://", string.Empty);
+                    var port = txtPort.Text;
+                    var content = client.DownloadString("http://" + host + ":" + port);
+                    //var content = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "test.txt");
                     var html = new HtmlAgilityPack.HtmlDocument();
                     html.LoadHtml(content);
                     var doc = html.DocumentNode;
@@ -42,7 +45,7 @@ namespace VBot
 
                     // Xóa cột th
                     arrTrs.RemoveAt(0);
-                    
+
                     foreach (var node in arrTrs)
                     {
                         // Lấy danh sách cột
@@ -63,6 +66,7 @@ namespace VBot
                             Comments = arrCols[8].InnerText
                         };
                         buiducanhWebservie.InsertMiner(miner);
+                        //MessageBox.Show(JsonConvert.SerializeObject(miner));
                     }
 
                     Thread.Sleep(5000);
@@ -95,6 +99,8 @@ namespace VBot
                 // Monitoring
                 thMonitor = new Thread(GetData) { IsBackground = true };
                 thMonitor.Start();
+                txtHost.Enabled = false;
+                txtPort.Enabled = false;
                 btnMonitor.Enabled = false;
                 txtEmail.Enabled = false;
                 btnStop.Enabled = true;
@@ -115,6 +121,8 @@ namespace VBot
                 var email = File.ReadAllText(DataFilePath);
 
                 txtEmail.Text = email;
+                txtHost.Enabled = false;
+                txtPort.Enabled = false;
                 txtEmail.Enabled = false;
                 btnMonitor.Enabled = false;
                 btnStop.Enabled = true;
@@ -126,6 +134,8 @@ namespace VBot
             }
             else
             {
+                txtHost.Enabled = true;
+                txtPort.Enabled = true;
                 txtEmail.Enabled = true;
                 btnMonitor.Enabled = true;
                 lblMonitor.Visible = false;
@@ -138,6 +148,8 @@ namespace VBot
 
         private void btnStop_Click(object sender, EventArgs e)
         {
+            txtHost.Enabled = true;
+            txtPort.Enabled = true;
             txtEmail.Enabled = true;
             btnMonitor.Enabled = true;
             lblMonitor.Visible = false;

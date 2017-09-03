@@ -140,6 +140,13 @@ namespace VBot.buiducanh {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertMiner", ReplyAction="*")]
         System.Threading.Tasks.Task InsertMinerAsync(VBot.buiducanh.MinerInfo miner);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetMiners", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string GetMiners(string email, bool fullData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetMiners", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> GetMinersAsync(string email, bool fullData);
     }
     
     /// <remarks/>
@@ -483,6 +490,14 @@ namespace VBot.buiducanh {
         
         public System.Threading.Tasks.Task InsertMinerAsync(VBot.buiducanh.MinerInfo miner) {
             return base.Channel.InsertMinerAsync(miner);
+        }
+        
+        public string GetMiners(string email, bool fullData) {
+            return base.Channel.GetMiners(email, fullData);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetMinersAsync(string email, bool fullData) {
+            return base.Channel.GetMinersAsync(email, fullData);
         }
     }
 }
