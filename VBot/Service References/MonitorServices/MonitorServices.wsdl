@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="InsertMiner">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="minerInfo" type="tns:MinerInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MinerInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="EmailId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ip" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RunningTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EthereumStats" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GpuTemperature" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Pool" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comments" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DcrInfo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="InsertMinerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InsertMinerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="InsertMinerSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertMiner" />
+  </wsdl:message>
+  <wsdl:message name="InsertMinerSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertMinerResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MonitorServicesSoap">
+    <wsdl:operation name="InsertMiner">
+      <wsdl:input message="tns:InsertMinerSoapIn" />
+      <wsdl:output message="tns:InsertMinerSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MonitorServicesSoap" type="tns:MonitorServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="InsertMiner">
+      <soap:operation soapAction="http://tempuri.org/InsertMiner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MonitorServicesSoap12" type="tns:MonitorServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="InsertMiner">
+      <soap12:operation soapAction="http://tempuri.org/InsertMiner" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MonitorServices">
+    <wsdl:port name="MonitorServicesSoap" binding="tns:MonitorServicesSoap">
+      <soap:address location="http://trau.buiducanh.net/webservices/MonitorServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MonitorServicesSoap12" binding="tns:MonitorServicesSoap12">
+      <soap12:address location="http://trau.buiducanh.net/webservices/MonitorServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

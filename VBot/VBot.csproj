@@ -67,9 +67,10 @@
     <Compile Include="MinerMonitor.Designer.cs">
       <DependentUpon>MinerMonitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Miner_Library.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\buiducanh\Reference.cs">
+    <Compile Include="Service References\MonitorServices\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -96,7 +97,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\buiducanh\index.wsdl" />
+    <None Include="Service References\MonitorServices\MonitorServices.wsdl" />
+    <None Include="Service References\MonitorServices\VBot.MonitorServices.InsertMinerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -105,24 +109,16 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\buiducanh\" />
+    <WCFMetadataStorage Include="Service References\MonitorServices\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\buiducanh\index.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\buiducanh\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\buiducanh\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\buiducanh\Reference.svcmap">
+    <None Include="Service References\MonitorServices\MonitorServices.disco" />
+    <None Include="Service References\MonitorServices\configuration91.svcinfo" />
+    <None Include="Service References\MonitorServices\configuration.svcinfo" />
+    <None Include="Service References\MonitorServices\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="test.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

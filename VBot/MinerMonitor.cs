@@ -6,16 +6,16 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using Fizzler.Systems.HtmlAgilityPack;
-using Newtonsoft.Json;
-using VBot.buiducanh;
+using VBot.MonitorServices;
 
 namespace VBot
 {
     public partial class MinerMonitor : Form
     {
+        const int SLEEP_TIME = 7000;
         private Thread thMonitor;
         WebClient client = new WebClient();
-        IndexSoapClient buiducanhWebservie = new IndexSoapClient("IndexSoap12");
+        MonitorServicesSoapClient monitorService = new MonitorServicesSoapClient("MonitorServicesSoap");
         private string DataFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Data.dll";
 
         public MinerMonitor()
@@ -25,10 +25,23 @@ namespace VBot
             thMonitor = new Thread(GetData) { IsBackground = true };
         }
 
+        delegate void SetGridViewDataSourceDelegate(string result);
+
+        private void SetTextBoxData(string result)
+        {
+            if (InvokeRequired)
+                Invoke(new SetGridViewDataSourceDelegate(SetTextBoxData), result);
+            else
+            {
+                txtContent.AppendText(Environment.NewLine + result);
+            }
+        }
+
         private void GetData()
         {
             try
             {
+                var i = 1;
                 while (true)
                 {
                     var host = txtHost.Text.Replace("http://", string.Empty);
@@ -65,11 +78,13 @@ namespace VBot
                             Version = arrCols[7].InnerText,
                             Comments = arrCols[8].InnerText
                         };
-                        buiducanhWebservie.InsertMiner(miner);
-                        //MessageBox.Show(JsonConvert.SerializeObject(miner));
+                        var minerId = monitorService.InsertMiner(miner);
+                        SetTextBoxData($"{i}. Sent miner '{miner.Name}' infomation successful at {DateTime.Now} ^_^");
+                        linkLabel1.Text = @"http://trau.buiducanh.net/miners/" + minerId;
                     }
 
-                    Thread.Sleep(5000);
+                    i++;
+                    Thread.Sleep(SLEEP_TIME);
                 }
             }
             catch (Exception ex)
@@ -86,31 +101,39 @@ namespace VBot
 
         private void btnMonitor_Click(object sender, EventArgs e)
         {
-            var email = txtEmail.Text.Trim();
-            if (!string.IsNullOrEmpty(email))
+            try
             {
-                // Ghi nhớ Email
-                if (!File.Exists(DataFilePath))
+                var email = txtEmail.Text.Trim();
+                if (!string.IsNullOrEmpty(email))
                 {
-                    File.Create(DataFilePath).Close();
-                }
-                File.WriteAllText(DataFilePath, email);
+                    // Ghi nhớ Email
+                    if (!File.Exists(DataFilePath))
+                    {
+                        File.Create(DataFilePath).Close();
+                    }
+                    File.WriteAllText(DataFilePath, email);
 
-                // Monitoring
-                thMonitor = new Thread(GetData) { IsBackground = true };
-                thMonitor.Start();
-                txtHost.Enabled = false;
-                txtPort.Enabled = false;
-                btnMonitor.Enabled = false;
-                txtEmail.Enabled = false;
-                btnStop.Enabled = true;
-                lblMonitor.Visible = true;
-                linkLabel1.Visible = true;
-                linkLabel1.Text = @"https://www.buiducanh.net/Pages/theodoitrau.aspx?Email=" + email;
+                    // Monitoring
+                    txtContent.Text = string.Empty;
+                    thMonitor = new Thread(GetData) { IsBackground = true };
+                    thMonitor.Start();
+                    txtHost.Enabled = false;
+                    txtPort.Enabled = false;
+                    btnMonitor.Enabled = false;
+                    txtEmail.Enabled = false;
+                    btnStop.Enabled = true;
+                    lblMonitor.Visible = true;
+                    linkLabel1.Visible = true;
+
+                }
+                else
+                {
+                    MessageBox.Show(this, @"Bạn chưa nhập Email !!!", @"Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(this, @"Bạn chưa nhập Email !!!", @"Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -128,8 +151,7 @@ namespace VBot
                 btnStop.Enabled = true;
                 lblMonitor.Visible = true;
                 linkLabel1.Visible = true;
-                linkLabel1.Text = @"https://www.buiducanh.net/Pages/theodoitrau.aspx?Email=" + email;
-
+                
                 thMonitor.Start();
             }
             else
@@ -143,6 +165,7 @@ namespace VBot
                 btnStop.Enabled = false;
 
                 thMonitor.Abort();
+                MessageBox.Show(File.Exists(DataFilePath).ToString());
             }
         }
 
