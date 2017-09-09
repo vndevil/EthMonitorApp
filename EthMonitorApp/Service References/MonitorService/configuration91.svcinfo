@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="cGRe9hUgiqKlyZ4wT20IPZPZvkc=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="cKlPR5mJcTR6RY6AuMBZ6we2byw=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="MonitorServicesSoap">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="MonitorServicesSoap" contract="MonitorServices.MonitorServicesSoap" bindingType="basicHttpBinding" address="http://trau.buiducanh.net/webservices/MonitorServices.asmx" bindingConfiguration="MonitorServicesSoap">
+    <endpoint name="MonitorServicesSoap" contract="MonitorService.MonitorServicesSoap" bindingType="basicHttpBinding" address="http://www.ethmonitor.net/Webservices/MonitorServices.asmx" bindingConfiguration="MonitorServicesSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://trau.buiducanh.net/webservices/MonitorServices.asmx</serializedValue>
+          <serializedValue>http://www.ethmonitor.net/Webservices/MonitorServices.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -127,7 +127,7 @@
           <serializedValue>MonitorServicesSoap</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>MonitorServices.MonitorServicesSoap</serializedValue>
+          <serializedValue>MonitorService.MonitorServicesSoap</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>

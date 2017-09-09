@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VBot
+namespace EthMonitorApp
 {
     public class ConvertHelper
     {

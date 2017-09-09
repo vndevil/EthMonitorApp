@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ac804402-d6db-45c0-98e7-0ad47de7bea4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="31565397-9f52-4c48-9e81-60202260298f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://trau.buiducanh.net/webservices/MonitorServices.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://www.ethmonitor.net/Webservices/MonitorServices.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MonitorServices.disco" MetadataType="Disco" ID="444d6169-ec1b-4ead-8e8d-fa80ebec4a35" SourceId="1" SourceUrl="http://trau.buiducanh.net/webservices/MonitorServices.asmx?disco" />
-    <MetadataFile FileName="MonitorServices.wsdl" MetadataType="Wsdl" ID="cc74689e-d496-488d-907c-465b2075d572" SourceId="1" SourceUrl="http://trau.buiducanh.net/webservices/MonitorServices.asmx?wsdl" />
+    <MetadataFile FileName="MonitorServices.disco" MetadataType="Disco" ID="931fc504-7053-45ed-922f-159871cab3aa" SourceId="1" SourceUrl="http://www.ethmonitor.net/Webservices/MonitorServices.asmx?disco" />
+    <MetadataFile FileName="MonitorServices.wsdl" MetadataType="Wsdl" ID="4c798972-118a-4b53-b361-725fe99a64a8" SourceId="1" SourceUrl="http://www.ethmonitor.net/Webservices/MonitorServices.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

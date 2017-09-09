@@ -5,11 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using EthMonitorApp.MonitorService;
 using Fizzler.Systems.HtmlAgilityPack;
-using VBot.MonitorServices;
+using Newtonsoft.Json;
 
-namespace VBot
+namespace EthMonitorApp
 {
+
+
     public partial class MinerMonitor : Form
     {
         const int SLEEP_TIME = 7000;
@@ -34,6 +37,34 @@ namespace VBot
             else
             {
                 txtContent.AppendText(Environment.NewLine + result);
+            }
+        }
+
+        public void EnableApp(bool isStart)
+        {
+            txtContent.Text = string.Empty;
+
+            if (isStart)
+            {
+                txtHost.Enabled = false;
+                txtPort.Enabled = false;
+                btnMonitor.Enabled = false;
+                txtWallet.Enabled = false;
+                txtEmail.Enabled = false;
+                btnStop.Enabled = true;
+                lblMonitor.Visible = true;
+                linkLabel1.Visible = true;
+            }
+            else
+            {
+                txtHost.Enabled = true;
+                txtPort.Enabled = true;
+                txtWallet.Enabled = true;
+                txtEmail.Enabled = true;
+                btnMonitor.Enabled = true;
+                lblMonitor.Visible = false;
+                linkLabel1.Visible = false;
+                btnStop.Enabled = false;
             }
         }
 
@@ -67,7 +98,8 @@ namespace VBot
                         // Thêm mới Miner
                         var miner = new MinerInfo
                         {
-                            EmailId = txtEmail.Text.Trim(),
+                            Wallet = txtWallet.Text.ToLower().Trim(),
+                            EmailId = txtEmail.Text.ToLower().Trim(),
                             Name = arrCols[0].InnerText,
                             Ip = arrCols[1].InnerText,
                             RunningTime = arrCols[2].InnerText,
@@ -79,8 +111,8 @@ namespace VBot
                             Comments = arrCols[8].InnerText
                         };
                         var minerId = monitorService.InsertMiner(miner);
-                        SetTextBoxData($"{i}. Sent miner '{miner.Name}' infomation successful at {DateTime.Now} ^_^");
-                        linkLabel1.Text = @"http://trau.buiducanh.net/miners/" + minerId;
+                        SetTextBoxData($"{i}. Sent miner '{miner.Name}' infomation successful at {DateTime.Now}");
+                        linkLabel1.Text = @"http://www.ethmonitor.net/miners/" + minerId.ToLower();
                     }
 
                     i++;
@@ -103,31 +135,30 @@ namespace VBot
         {
             try
             {
-                var email = txtEmail.Text.Trim();
-                if (!string.IsNullOrEmpty(email))
+                var obj = new MonitorObject
+                {
+                    Wallet = txtWallet.Text.ToLower().Trim(),
+                    Email = txtEmail.Text.ToLower().Trim()
+                };
+
+                if (!string.IsNullOrEmpty(obj.Email))
                 {
                     // Ghi nhớ Email
                     if (!File.Exists(DataFilePath))
                     {
                         File.Create(DataFilePath).Close();
                     }
-                    File.WriteAllText(DataFilePath, email);
+                    File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
 
                     // Monitoring
-                    txtContent.Text = string.Empty;
                     thMonitor = new Thread(GetData) { IsBackground = true };
                     thMonitor.Start();
-                    txtHost.Enabled = false;
-                    txtPort.Enabled = false;
-                    btnMonitor.Enabled = false;
-                    txtEmail.Enabled = false;
-                    btnStop.Enabled = true;
-                    lblMonitor.Visible = true;
-                    linkLabel1.Visible = true;
 
+                    EnableApp(true);
                 }
                 else
                 {
+                    EnableApp(true);
                     MessageBox.Show(this, @"Bạn chưa nhập Email !!!", @"Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -141,42 +172,22 @@ namespace VBot
         {
             if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
             {
-                var email = File.ReadAllText(DataFilePath);
-
-                txtEmail.Text = email;
-                txtHost.Enabled = false;
-                txtPort.Enabled = false;
-                txtEmail.Enabled = false;
-                btnMonitor.Enabled = false;
-                btnStop.Enabled = true;
-                lblMonitor.Visible = true;
-                linkLabel1.Visible = true;
-                
+                var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
+                txtEmail.Text = obj.Email;
+                txtWallet.Text = obj.Wallet;
+                EnableApp(true);
                 thMonitor.Start();
             }
             else
             {
-                txtHost.Enabled = true;
-                txtPort.Enabled = true;
-                txtEmail.Enabled = true;
-                btnMonitor.Enabled = true;
-                lblMonitor.Visible = false;
-                linkLabel1.Visible = false;
-                btnStop.Enabled = false;
-
+                EnableApp(false);
                 thMonitor.Abort();
-                MessageBox.Show(File.Exists(DataFilePath).ToString());
             }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            txtHost.Enabled = true;
-            txtPort.Enabled = true;
-            txtEmail.Enabled = true;
-            btnMonitor.Enabled = true;
-            lblMonitor.Visible = false;
-            linkLabel1.Visible = false;
+            EnableApp(false);
             thMonitor.Abort();
         }
 

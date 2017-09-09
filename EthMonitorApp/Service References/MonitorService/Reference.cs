@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VBot.MonitorServices {
+namespace EthMonitorApp.MonitorService {
     using System.Runtime.Serialization;
     using System;
     
@@ -21,6 +21,9 @@ namespace VBot.MonitorServices {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WalletField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailIdField;
@@ -63,6 +66,19 @@ namespace VBot.MonitorServices {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Wallet {
+            get {
+                return this.WalletField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WalletField, value) != true)) {
+                    this.WalletField = value;
+                    this.RaisePropertyChanged("Wallet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
         public string EmailId {
             get {
                 return this.EmailIdField;
@@ -75,7 +91,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
         public string Name {
             get {
                 return this.NameField;
@@ -88,7 +104,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
         public string Ip {
             get {
                 return this.IpField;
@@ -101,7 +117,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
         public string RunningTime {
             get {
                 return this.RunningTimeField;
@@ -114,7 +130,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
         public string EthereumStats {
             get {
                 return this.EthereumStatsField;
@@ -127,7 +143,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
         public string GpuTemperature {
             get {
                 return this.GpuTemperatureField;
@@ -140,7 +156,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
         public string Pool {
             get {
                 return this.PoolField;
@@ -153,7 +169,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
         public string Version {
             get {
                 return this.VersionField;
@@ -166,7 +182,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
         public string Comments {
             get {
                 return this.CommentsField;
@@ -179,7 +195,7 @@ namespace VBot.MonitorServices {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=10)]
         public string DcrInfo {
             get {
                 return this.DcrInfoField;
@@ -203,15 +219,15 @@ namespace VBot.MonitorServices {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MonitorServices.MonitorServicesSoap")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MonitorService.MonitorServicesSoap")]
     public interface MonitorServicesSoap {
         
         // CODEGEN: Generating message contract since element name minerInfo from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertMiner", ReplyAction="*")]
-        VBot.MonitorServices.InsertMinerResponse InsertMiner(VBot.MonitorServices.InsertMinerRequest request);
+        EthMonitorApp.MonitorService.InsertMinerResponse InsertMiner(EthMonitorApp.MonitorService.InsertMinerRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertMiner", ReplyAction="*")]
-        System.Threading.Tasks.Task<VBot.MonitorServices.InsertMinerResponse> InsertMinerAsync(VBot.MonitorServices.InsertMinerRequest request);
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> InsertMinerAsync(EthMonitorApp.MonitorService.InsertMinerRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -221,12 +237,12 @@ namespace VBot.MonitorServices {
     public partial class InsertMinerRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertMiner", Namespace="http://tempuri.org/", Order=0)]
-        public VBot.MonitorServices.InsertMinerRequestBody Body;
+        public EthMonitorApp.MonitorService.InsertMinerRequestBody Body;
         
         public InsertMinerRequest() {
         }
         
-        public InsertMinerRequest(VBot.MonitorServices.InsertMinerRequestBody Body) {
+        public InsertMinerRequest(EthMonitorApp.MonitorService.InsertMinerRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -238,12 +254,12 @@ namespace VBot.MonitorServices {
     public partial class InsertMinerRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public VBot.MonitorServices.MinerInfo minerInfo;
+        public EthMonitorApp.MonitorService.MinerInfo minerInfo;
         
         public InsertMinerRequestBody() {
         }
         
-        public InsertMinerRequestBody(VBot.MonitorServices.MinerInfo minerInfo) {
+        public InsertMinerRequestBody(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
             this.minerInfo = minerInfo;
         }
     }
@@ -255,12 +271,12 @@ namespace VBot.MonitorServices {
     public partial class InsertMinerResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertMinerResponse", Namespace="http://tempuri.org/", Order=0)]
-        public VBot.MonitorServices.InsertMinerResponseBody Body;
+        public EthMonitorApp.MonitorService.InsertMinerResponseBody Body;
         
         public InsertMinerResponse() {
         }
         
-        public InsertMinerResponse(VBot.MonitorServices.InsertMinerResponseBody Body) {
+        public InsertMinerResponse(EthMonitorApp.MonitorService.InsertMinerResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -283,12 +299,12 @@ namespace VBot.MonitorServices {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface MonitorServicesSoapChannel : VBot.MonitorServices.MonitorServicesSoap, System.ServiceModel.IClientChannel {
+    public interface MonitorServicesSoapChannel : EthMonitorApp.MonitorService.MonitorServicesSoap, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MonitorServicesSoapClient : System.ServiceModel.ClientBase<VBot.MonitorServices.MonitorServicesSoap>, VBot.MonitorServices.MonitorServicesSoap {
+    public partial class MonitorServicesSoapClient : System.ServiceModel.ClientBase<EthMonitorApp.MonitorService.MonitorServicesSoap>, EthMonitorApp.MonitorService.MonitorServicesSoap {
         
         public MonitorServicesSoapClient() {
         }
@@ -310,28 +326,28 @@ namespace VBot.MonitorServices {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        VBot.MonitorServices.InsertMinerResponse VBot.MonitorServices.MonitorServicesSoap.InsertMiner(VBot.MonitorServices.InsertMinerRequest request) {
+        EthMonitorApp.MonitorService.InsertMinerResponse EthMonitorApp.MonitorService.MonitorServicesSoap.InsertMiner(EthMonitorApp.MonitorService.InsertMinerRequest request) {
             return base.Channel.InsertMiner(request);
         }
         
-        public string InsertMiner(VBot.MonitorServices.MinerInfo minerInfo) {
-            VBot.MonitorServices.InsertMinerRequest inValue = new VBot.MonitorServices.InsertMinerRequest();
-            inValue.Body = new VBot.MonitorServices.InsertMinerRequestBody();
+        public string InsertMiner(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
+            EthMonitorApp.MonitorService.InsertMinerRequest inValue = new EthMonitorApp.MonitorService.InsertMinerRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.InsertMinerRequestBody();
             inValue.Body.minerInfo = minerInfo;
-            VBot.MonitorServices.InsertMinerResponse retVal = ((VBot.MonitorServices.MonitorServicesSoap)(this)).InsertMiner(inValue);
+            EthMonitorApp.MonitorService.InsertMinerResponse retVal = ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).InsertMiner(inValue);
             return retVal.Body.InsertMinerResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<VBot.MonitorServices.InsertMinerResponse> VBot.MonitorServices.MonitorServicesSoap.InsertMinerAsync(VBot.MonitorServices.InsertMinerRequest request) {
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> EthMonitorApp.MonitorService.MonitorServicesSoap.InsertMinerAsync(EthMonitorApp.MonitorService.InsertMinerRequest request) {
             return base.Channel.InsertMinerAsync(request);
         }
         
-        public System.Threading.Tasks.Task<VBot.MonitorServices.InsertMinerResponse> InsertMinerAsync(VBot.MonitorServices.MinerInfo minerInfo) {
-            VBot.MonitorServices.InsertMinerRequest inValue = new VBot.MonitorServices.InsertMinerRequest();
-            inValue.Body = new VBot.MonitorServices.InsertMinerRequestBody();
+        public System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> InsertMinerAsync(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
+            EthMonitorApp.MonitorService.InsertMinerRequest inValue = new EthMonitorApp.MonitorService.InsertMinerRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.InsertMinerRequestBody();
             inValue.Body.minerInfo = minerInfo;
-            return ((VBot.MonitorServices.MonitorServicesSoap)(this)).InsertMinerAsync(inValue);
+            return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).InsertMinerAsync(inValue);
         }
     }
 }

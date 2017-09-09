@@ -7,8 +7,8 @@
     <ProjectGuid>{E20C5401-F40E-4376-B508-A0D72C69ACA5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VBot</RootNamespace>
-    <AssemblyName>VBot</AssemblyName>
+    <RootNamespace>EthMonitorApp</RootNamespace>
+    <AssemblyName>EthMonitorApp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -67,10 +67,10 @@
     <Compile Include="MinerMonitor.Designer.cs">
       <DependentUpon>MinerMonitor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Miner_Library.cs" />
+    <Compile Include="MonitorObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\MonitorServices\Reference.cs">
+    <Compile Include="Service References\MonitorService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -86,6 +86,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -97,10 +98,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\MonitorServices\MonitorServices.wsdl" />
-    <None Include="Service References\MonitorServices\VBot.MonitorServices.InsertMinerResponse.datasource">
+    <None Include="Service References\MonitorService\EthMonitorApp.MonitorService.InsertMinerResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\MonitorService\MonitorServices.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -109,17 +110,17 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\MonitorServices\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\MonitorServices\MonitorServices.disco" />
-    <None Include="Service References\MonitorServices\configuration91.svcinfo" />
-    <None Include="Service References\MonitorServices\configuration.svcinfo" />
-    <None Include="Service References\MonitorServices\Reference.svcmap">
+    <None Include="Service References\MonitorService\MonitorServices.disco" />
+    <None Include="Service References\MonitorService\configuration91.svcinfo" />
+    <None Include="Service References\MonitorService\configuration.svcinfo" />
+    <None Include="Service References\MonitorService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="test.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\MonitorService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

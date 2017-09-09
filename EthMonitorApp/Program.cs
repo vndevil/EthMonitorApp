@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace VBot
+namespace EthMonitorApp
 {
     static class Program
     {
