@@ -13,11 +13,17 @@ namespace EthMonitorApp
 {
     public partial class MinerMonitor : Form
     {
-        const int SLEEP_TIME = 7000;
+        #region Fields
+
+        const int SLEEP_TIME = 30000;
         private Thread thMonitor;
         WebClient client = new WebClient();
         MonitorServicesSoapClient monitorService = new MonitorServicesSoapClient("MonitorServicesSoap");
         private string DataFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Data.dll";
+
+        #endregion
+
+        #region Contructors
 
         public MinerMonitor()
         {
@@ -26,6 +32,10 @@ namespace EthMonitorApp
             thMonitor = new Thread(GetData) { IsBackground = true };
             MaximizeBox = false;
         }
+
+        #endregion
+
+        #region Methods
 
         delegate void SetGridViewDataSourceDelegate(string result);
 
@@ -106,12 +116,13 @@ namespace EthMonitorApp
                             Comments = arrCols[8].InnerText
                         };
                         var minerId = monitorService.InsertMiner(miner);
-                        SetTextBoxData($"{i}. Sent miner '{miner.Name}' infomation successful at {DateTime.Now}");
+
                         linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerId.ToLower();
                     }
 
-                    i++;
+                    SetTextBoxData($"{i}. Sent infomation successful at {DateTime.Now}");
                     Thread.Sleep(SLEEP_TIME);
+                    i++;
                 }
             }
             catch (Exception ex)
@@ -120,6 +131,39 @@ namespace EthMonitorApp
                 MessageBox.Show(ex.Message);
             }
         }
+
+        #endregion
+
+        #region Form Events
+
+        private void MinerMonitor_Load(object sender, EventArgs e)
+        {
+            Text = @"EthMonitor.NET | buiducanh.net";
+            txtEmail.Select();
+
+            if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
+            {
+                var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
+                txtEmail.Text = obj.Email;
+                txtWallet.Text = obj.Wallet;
+                EnableApp(true);
+                thMonitor.Start();
+            }
+            else
+            {
+                EnableApp(false);
+                thMonitor.Abort();
+            }
+        }
+
+        private void MinerMonitor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            thMonitor?.Abort();
+        }
+
+        #endregion
+
+        #region User Events
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -153,7 +197,8 @@ namespace EthMonitorApp
                 }
                 else
                 {
-                    EnableApp(true);
+                    EnableApp(false);
+                    txtEmail.Select();
                     MessageBox.Show(this, @"Bạn chưa nhập Email hoặc Wallet !!!", @"Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -163,34 +208,10 @@ namespace EthMonitorApp
             }
         }
 
-        private void MinerMonitor_Load(object sender, EventArgs e)
-        {
-            Text = @"EthMonitor.NET | buiducanh.net";
-
-            if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
-            {
-                var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
-                txtEmail.Text = obj.Email;
-                txtWallet.Text = obj.Wallet;
-                EnableApp(true);
-                thMonitor.Start();
-            }
-            else
-            {
-                EnableApp(false);
-                thMonitor.Abort();
-            }
-        }
-
         private void btnStop_Click(object sender, EventArgs e)
         {
             EnableApp(false);
             thMonitor.Abort();
-        }
-
-        private void MinerMonitor_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            thMonitor?.Abort();
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
@@ -198,5 +219,7 @@ namespace EthMonitorApp
             var aboutForm = new About { MaximizeBox = false };
             aboutForm.ShowDialog();
         }
+
+        #endregion
     }
 }
