@@ -11,8 +11,6 @@ using Newtonsoft.Json;
 
 namespace EthMonitorApp
 {
-
-
     public partial class MinerMonitor : Form
     {
         const int SLEEP_TIME = 7000;
@@ -26,6 +24,7 @@ namespace EthMonitorApp
             InitializeComponent();
 
             thMonitor = new Thread(GetData) { IsBackground = true };
+            MaximizeBox = false;
         }
 
         delegate void SetGridViewDataSourceDelegate(string result);
@@ -52,8 +51,6 @@ namespace EthMonitorApp
                 txtWallet.Enabled = false;
                 txtEmail.Enabled = false;
                 btnStop.Enabled = true;
-                lblMonitor.Visible = true;
-                linkLabel1.Visible = true;
             }
             else
             {
@@ -62,8 +59,6 @@ namespace EthMonitorApp
                 txtWallet.Enabled = true;
                 txtEmail.Enabled = true;
                 btnMonitor.Enabled = true;
-                lblMonitor.Visible = false;
-                linkLabel1.Visible = false;
                 btnStop.Enabled = false;
             }
         }
@@ -112,7 +107,7 @@ namespace EthMonitorApp
                         };
                         var minerId = monitorService.InsertMiner(miner);
                         SetTextBoxData($"{i}. Sent miner '{miner.Name}' infomation successful at {DateTime.Now}");
-                        linkLabel1.Text = @"http://www.ethmonitor.net/miners/" + minerId.ToLower();
+                        linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerId.ToLower();
                     }
 
                     i++;
@@ -137,11 +132,11 @@ namespace EthMonitorApp
             {
                 var obj = new MonitorObject
                 {
-                    Wallet = txtWallet.Text.ToLower().Trim(),
-                    Email = txtEmail.Text.ToLower().Trim()
+                    Wallet = StringHelper.RemoveSign4VietnameseString(txtWallet.Text.ToLower().Trim()),
+                    Email = StringHelper.RemoveSign4VietnameseString(txtEmail.Text.ToLower().Trim())
                 };
 
-                if (!string.IsNullOrEmpty(obj.Email))
+                if (!string.IsNullOrEmpty(obj.Email) || !string.IsNullOrEmpty(obj.Wallet))
                 {
                     // Ghi nhớ Email
                     if (!File.Exists(DataFilePath))
@@ -159,7 +154,7 @@ namespace EthMonitorApp
                 else
                 {
                     EnableApp(true);
-                    MessageBox.Show(this, @"Bạn chưa nhập Email !!!", @"Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, @"Bạn chưa nhập Email hoặc Wallet !!!", @"Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -170,6 +165,8 @@ namespace EthMonitorApp
 
         private void MinerMonitor_Load(object sender, EventArgs e)
         {
+            Text = @"EthMonitor.NET | buiducanh.net";
+
             if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
             {
                 var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
@@ -194,6 +191,12 @@ namespace EthMonitorApp
         private void MinerMonitor_FormClosed(object sender, FormClosedEventArgs e)
         {
             thMonitor?.Abort();
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new About { MaximizeBox = false };
+            aboutForm.ShowDialog();
         }
     }
 }
