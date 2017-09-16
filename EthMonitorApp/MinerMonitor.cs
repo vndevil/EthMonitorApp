@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -88,6 +89,14 @@ namespace EthMonitorApp
                     html.LoadHtml(content);
                     var doc = html.DocumentNode;
 
+                    // Miner
+                    var miner = new MinerInfo
+                    {
+                        Wallet = txtWallet.Text.ToLower().Trim(),
+                        EmailId = txtEmail.Text.ToLower().Trim(),
+                        Name = StringHelper.RemoveSign4VietnameseString(txtName.Text.Trim())
+                    };
+
                     // Lấy dữ liệu MinerInfo
                     // Lấy danh sách dòng
                     var arrTrs = doc.QuerySelectorAll("tr").ToList();
@@ -95,17 +104,15 @@ namespace EthMonitorApp
                     // Xóa cột th
                     arrTrs.RemoveAt(0);
 
+                    var arrWorkers = new List<Worker>();
                     foreach (var node in arrTrs)
                     {
                         // Lấy danh sách cột
                         var arrCols = node.QuerySelectorAll("td").ToList();
 
                         // Thêm mới Miner
-                        var miner = new MinerInfo
+                        arrWorkers.Add(new Worker
                         {
-                            Wallet = txtWallet.Text.ToLower().Trim(),
-                            EmailId = txtEmail.Text.ToLower().Trim(),
-                            Name = arrCols[0].InnerText,
                             Ip = arrCols[1].InnerText,
                             RunningTime = arrCols[2].InnerText,
                             EthereumStats = arrCols[3].InnerText,
@@ -114,13 +121,13 @@ namespace EthMonitorApp
                             Pool = arrCols[6].InnerText,
                             Version = arrCols[7].InnerText,
                             Comments = arrCols[8].InnerText
-                        };
-                        var minerId = monitorService.InsertMiner(miner);
-
-                        linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerId.ToLower();
+                        });
                     }
 
-                    SetTextBoxData($"{i}. Sent infomation successful at {DateTime.Now}");
+                    miner.Workers = arrWorkers.ToArray();
+                    var minerId = monitorService.InsertMiner(miner);
+                    linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerId.ToLower();
+                    SetTextBoxData($"{i}. Sent infomation miner '{miner.Name}' and {arrWorkers.Count} workers to EthMonitor.NET successful at {DateTime.Now}");
                     Thread.Sleep(SLEEP_TIME);
                     i++;
                 }
@@ -177,29 +184,43 @@ namespace EthMonitorApp
                 var obj = new MonitorObject
                 {
                     Wallet = StringHelper.RemoveSign4VietnameseString(txtWallet.Text.ToLower().Trim()),
-                    Email = StringHelper.RemoveSign4VietnameseString(txtEmail.Text.ToLower().Trim())
+                    Email = StringHelper.RemoveSign4VietnameseString(txtEmail.Text.ToLower().Trim()),
+                    Name = StringHelper.RemoveSign4VietnameseString(txtName.Text.Trim()),
                 };
 
-                if (!string.IsNullOrEmpty(obj.Email) || !string.IsNullOrEmpty(obj.Wallet))
+                if (!string.IsNullOrEmpty(obj.Email) && !string.IsNullOrEmpty(obj.Wallet) && !string.IsNullOrEmpty(obj.Name))
                 {
-                    // Ghi nhớ Email
-                    if (!File.Exists(DataFilePath))
+                    // Check Wallet
+                    //https://api.ethermine.org/miner/deoco/currentStats
+                    var url = $"/miner/{obj.Wallet}/currentStats";
+                    var minerStats = JsonConvert.DeserializeObject<MinerStats>(client.DownloadString("https://api.ethermine.org" + url));
+
+                    if (minerStats.status != "ERROR")
                     {
-                        File.Create(DataFilePath).Close();
+                        // Ghi nhớ Email
+                        if (!File.Exists(DataFilePath))
+                        {
+                            File.Create(DataFilePath).Close();
+                        }
+                        File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
+
+                        // Monitoring
+                        thMonitor = new Thread(GetData) { IsBackground = true };
+                        thMonitor.Start();
+
+                        EnableApp(true);
                     }
-                    File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
-
-                    // Monitoring
-                    thMonitor = new Thread(GetData) { IsBackground = true };
-                    thMonitor.Start();
-
-                    EnableApp(true);
+                    else
+                    {
+                        txtWallet.Select();
+                        MessageBox.Show(this, @"Your ETH Wallet not found on Ethermine.org !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
                     EnableApp(false);
-                    txtEmail.Select();
-                    MessageBox.Show(this, @"Bạn chưa nhập Email hoặc Wallet !!!", @"Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtName.Select();
+                    MessageBox.Show(this, @"You need to enter your Name, Email and ETH Wallet !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

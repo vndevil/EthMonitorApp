@@ -32,28 +32,23 @@ namespace EthMonitorApp.MonitorService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IpField;
+        private EthMonitorApp.MonitorService.Worker[] WorkersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RunningTimeField;
+        private EthMonitorApp.MonitorService.MinerStatistics MinerStatsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EthereumStatsField;
+        private EthMonitorApp.MonitorService.MinerHistory[] MinerHistoryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string GpuTemperatureField;
+        private EthMonitorApp.MonitorService.MinerPayouts[] MinerPayoutsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PoolField;
+        private EthMonitorApp.MonitorService.MinerRounds[] MinerRoundsField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VersionField;
+        private System.DateTime CreatedDateField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CommentsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DcrInfoField;
+        private System.DateTime StatisticsDateField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -105,6 +100,433 @@ namespace EthMonitorApp.MonitorService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public EthMonitorApp.MonitorService.Worker[] Workers {
+            get {
+                return this.WorkersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WorkersField, value) != true)) {
+                    this.WorkersField = value;
+                    this.RaisePropertyChanged("Workers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public EthMonitorApp.MonitorService.MinerStatistics MinerStats {
+            get {
+                return this.MinerStatsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MinerStatsField, value) != true)) {
+                    this.MinerStatsField = value;
+                    this.RaisePropertyChanged("MinerStats");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        public EthMonitorApp.MonitorService.MinerHistory[] MinerHistory {
+            get {
+                return this.MinerHistoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MinerHistoryField, value) != true)) {
+                    this.MinerHistoryField = value;
+                    this.RaisePropertyChanged("MinerHistory");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
+        public EthMonitorApp.MonitorService.MinerPayouts[] MinerPayouts {
+            get {
+                return this.MinerPayoutsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MinerPayoutsField, value) != true)) {
+                    this.MinerPayoutsField = value;
+                    this.RaisePropertyChanged("MinerPayouts");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
+        public EthMonitorApp.MonitorService.MinerRounds[] MinerRounds {
+            get {
+                return this.MinerRoundsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MinerRoundsField, value) != true)) {
+                    this.MinerRoundsField = value;
+                    this.RaisePropertyChanged("MinerRounds");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=8)]
+        public System.DateTime CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
+        public System.DateTime StatisticsDate {
+            get {
+                return this.StatisticsDateField;
+            }
+            set {
+                if ((this.StatisticsDateField.Equals(value) != true)) {
+                    this.StatisticsDateField = value;
+                    this.RaisePropertyChanged("StatisticsDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MinerStatistics", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.Worker[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.Worker))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerHistory[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerHistory))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds))]
+    public partial class MinerStatistics : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int timeField;
+        
+        private int lastSeenField;
+        
+        private int reportedHashrateField;
+        
+        private double currentHashrateField;
+        
+        private int validSharesField;
+        
+        private int invalidSharesField;
+        
+        private int staleSharesField;
+        
+        private double averageHashrateField;
+        
+        private int activeWorkersField;
+        
+        private long unpaidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private object unconfirmedField;
+        
+        private double coinsPerMinField;
+        
+        private double usdPerMinField;
+        
+        private double btcPerMinField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int time {
+            get {
+                return this.timeField;
+            }
+            set {
+                if ((this.timeField.Equals(value) != true)) {
+                    this.timeField = value;
+                    this.RaisePropertyChanged("time");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public int lastSeen {
+            get {
+                return this.lastSeenField;
+            }
+            set {
+                if ((this.lastSeenField.Equals(value) != true)) {
+                    this.lastSeenField = value;
+                    this.RaisePropertyChanged("lastSeen");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        public int reportedHashrate {
+            get {
+                return this.reportedHashrateField;
+            }
+            set {
+                if ((this.reportedHashrateField.Equals(value) != true)) {
+                    this.reportedHashrateField = value;
+                    this.RaisePropertyChanged("reportedHashrate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
+        public double currentHashrate {
+            get {
+                return this.currentHashrateField;
+            }
+            set {
+                if ((this.currentHashrateField.Equals(value) != true)) {
+                    this.currentHashrateField = value;
+                    this.RaisePropertyChanged("currentHashrate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
+        public int validShares {
+            get {
+                return this.validSharesField;
+            }
+            set {
+                if ((this.validSharesField.Equals(value) != true)) {
+                    this.validSharesField = value;
+                    this.RaisePropertyChanged("validShares");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+        public int invalidShares {
+            get {
+                return this.invalidSharesField;
+            }
+            set {
+                if ((this.invalidSharesField.Equals(value) != true)) {
+                    this.invalidSharesField = value;
+                    this.RaisePropertyChanged("invalidShares");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
+        public int staleShares {
+            get {
+                return this.staleSharesField;
+            }
+            set {
+                if ((this.staleSharesField.Equals(value) != true)) {
+                    this.staleSharesField = value;
+                    this.RaisePropertyChanged("staleShares");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=7)]
+        public double averageHashrate {
+            get {
+                return this.averageHashrateField;
+            }
+            set {
+                if ((this.averageHashrateField.Equals(value) != true)) {
+                    this.averageHashrateField = value;
+                    this.RaisePropertyChanged("averageHashrate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=8)]
+        public int activeWorkers {
+            get {
+                return this.activeWorkersField;
+            }
+            set {
+                if ((this.activeWorkersField.Equals(value) != true)) {
+                    this.activeWorkersField = value;
+                    this.RaisePropertyChanged("activeWorkers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
+        public long unpaid {
+            get {
+                return this.unpaidField;
+            }
+            set {
+                if ((this.unpaidField.Equals(value) != true)) {
+                    this.unpaidField = value;
+                    this.RaisePropertyChanged("unpaid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=10)]
+        public object unconfirmed {
+            get {
+                return this.unconfirmedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.unconfirmedField, value) != true)) {
+                    this.unconfirmedField = value;
+                    this.RaisePropertyChanged("unconfirmed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=11)]
+        public double coinsPerMin {
+            get {
+                return this.coinsPerMinField;
+            }
+            set {
+                if ((this.coinsPerMinField.Equals(value) != true)) {
+                    this.coinsPerMinField = value;
+                    this.RaisePropertyChanged("coinsPerMin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=12)]
+        public double usdPerMin {
+            get {
+                return this.usdPerMinField;
+            }
+            set {
+                if ((this.usdPerMinField.Equals(value) != true)) {
+                    this.usdPerMinField = value;
+                    this.RaisePropertyChanged("usdPerMin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=13)]
+        public double btcPerMin {
+            get {
+                return this.btcPerMinField;
+            }
+            set {
+                if ((this.btcPerMinField.Equals(value) != true)) {
+                    this.btcPerMinField = value;
+                    this.RaisePropertyChanged("btcPerMin");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Worker", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class Worker : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RunningTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EthereumStatsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GpuTemperatureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PoolField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VersionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DcrInfoField;
+        
+        private System.DateTime CreatedDateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string EmailId {
+            get {
+                return this.EmailIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailIdField, value) != true)) {
+                    this.EmailIdField = value;
+                    this.RaisePropertyChanged("EmailId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
         public string Ip {
             get {
                 return this.IpField;
@@ -117,7 +539,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
         public string RunningTime {
             get {
                 return this.RunningTimeField;
@@ -130,7 +552,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
         public string EthereumStats {
             get {
                 return this.EthereumStatsField;
@@ -143,7 +565,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
         public string GpuTemperature {
             get {
                 return this.GpuTemperatureField;
@@ -156,7 +578,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
         public string Pool {
             get {
                 return this.PoolField;
@@ -169,7 +591,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
         public string Version {
             get {
                 return this.VersionField;
@@ -182,7 +604,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
         public string Comments {
             get {
                 return this.CommentsField;
@@ -195,7 +617,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
         public string DcrInfo {
             get {
                 return this.DcrInfoField;
@@ -204,6 +626,352 @@ namespace EthMonitorApp.MonitorService {
                 if ((object.ReferenceEquals(this.DcrInfoField, value) != true)) {
                     this.DcrInfoField = value;
                     this.RaisePropertyChanged("DcrInfo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=10)]
+        public System.DateTime CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MinerHistory", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class MinerHistory : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int timeField;
+        
+        private int reportedHashrateField;
+        
+        private double currentHashrateField;
+        
+        private int validSharesField;
+        
+        private int invalidSharesField;
+        
+        private int staleSharesField;
+        
+        private double averageHashrateField;
+        
+        private int activeWorkersField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int time {
+            get {
+                return this.timeField;
+            }
+            set {
+                if ((this.timeField.Equals(value) != true)) {
+                    this.timeField = value;
+                    this.RaisePropertyChanged("time");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public int reportedHashrate {
+            get {
+                return this.reportedHashrateField;
+            }
+            set {
+                if ((this.reportedHashrateField.Equals(value) != true)) {
+                    this.reportedHashrateField = value;
+                    this.RaisePropertyChanged("reportedHashrate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        public double currentHashrate {
+            get {
+                return this.currentHashrateField;
+            }
+            set {
+                if ((this.currentHashrateField.Equals(value) != true)) {
+                    this.currentHashrateField = value;
+                    this.RaisePropertyChanged("currentHashrate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
+        public int validShares {
+            get {
+                return this.validSharesField;
+            }
+            set {
+                if ((this.validSharesField.Equals(value) != true)) {
+                    this.validSharesField = value;
+                    this.RaisePropertyChanged("validShares");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
+        public int invalidShares {
+            get {
+                return this.invalidSharesField;
+            }
+            set {
+                if ((this.invalidSharesField.Equals(value) != true)) {
+                    this.invalidSharesField = value;
+                    this.RaisePropertyChanged("invalidShares");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+        public int staleShares {
+            get {
+                return this.staleSharesField;
+            }
+            set {
+                if ((this.staleSharesField.Equals(value) != true)) {
+                    this.staleSharesField = value;
+                    this.RaisePropertyChanged("staleShares");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
+        public double averageHashrate {
+            get {
+                return this.averageHashrateField;
+            }
+            set {
+                if ((this.averageHashrateField.Equals(value) != true)) {
+                    this.averageHashrateField = value;
+                    this.RaisePropertyChanged("averageHashrate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=7)]
+        public int activeWorkers {
+            get {
+                return this.activeWorkersField;
+            }
+            set {
+                if ((this.activeWorkersField.Equals(value) != true)) {
+                    this.activeWorkersField = value;
+                    this.RaisePropertyChanged("activeWorkers");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MinerPayouts", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.Worker[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.Worker))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerStatistics))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerHistory[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerHistory))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds))]
+    public partial class MinerPayouts : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int startField;
+        
+        private int endField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private object amountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string txHashField;
+        
+        private int paidOnField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int start {
+            get {
+                return this.startField;
+            }
+            set {
+                if ((this.startField.Equals(value) != true)) {
+                    this.startField = value;
+                    this.RaisePropertyChanged("start");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public int end {
+            get {
+                return this.endField;
+            }
+            set {
+                if ((this.endField.Equals(value) != true)) {
+                    this.endField = value;
+                    this.RaisePropertyChanged("end");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public object amount {
+            get {
+                return this.amountField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.amountField, value) != true)) {
+                    this.amountField = value;
+                    this.RaisePropertyChanged("amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string txHash {
+            get {
+                return this.txHashField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.txHashField, value) != true)) {
+                    this.txHashField = value;
+                    this.RaisePropertyChanged("txHash");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
+        public int paidOn {
+            get {
+                return this.paidOnField;
+            }
+            set {
+                if ((this.paidOnField.Equals(value) != true)) {
+                    this.paidOnField = value;
+                    this.RaisePropertyChanged("paidOn");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MinerRounds", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.Worker[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.Worker))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerStatistics))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerHistory[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerHistory))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds[]))]
+    public partial class MinerRounds : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int blockField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private object amountField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int block {
+            get {
+                return this.blockField;
+            }
+            set {
+                if ((this.blockField.Equals(value) != true)) {
+                    this.blockField = value;
+                    this.RaisePropertyChanged("block");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public object amount {
+            get {
+                return this.amountField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.amountField, value) != true)) {
+                    this.amountField = value;
+                    this.RaisePropertyChanged("amount");
                 }
             }
         }
