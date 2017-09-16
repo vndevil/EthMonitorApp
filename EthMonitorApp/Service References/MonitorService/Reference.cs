@@ -996,6 +996,13 @@ namespace EthMonitorApp.MonitorService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertMiner", ReplyAction="*")]
         System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> InsertMinerAsync(EthMonitorApp.MonitorService.InsertMinerRequest request);
+        
+        // CODEGEN: Generating message contract since element name uniqueName from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckMinerName", ReplyAction="*")]
+        EthMonitorApp.MonitorService.CheckMinerNameResponse CheckMinerName(EthMonitorApp.MonitorService.CheckMinerNameRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckMinerName", ReplyAction="*")]
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckMinerNameResponse> CheckMinerNameAsync(EthMonitorApp.MonitorService.CheckMinerNameRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1066,6 +1073,74 @@ namespace EthMonitorApp.MonitorService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class CheckMinerNameRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckMinerName", Namespace="http://tempuri.org/", Order=0)]
+        public EthMonitorApp.MonitorService.CheckMinerNameRequestBody Body;
+        
+        public CheckMinerNameRequest() {
+        }
+        
+        public CheckMinerNameRequest(EthMonitorApp.MonitorService.CheckMinerNameRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class CheckMinerNameRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string uniqueName;
+        
+        public CheckMinerNameRequestBody() {
+        }
+        
+        public CheckMinerNameRequestBody(string uniqueName) {
+            this.uniqueName = uniqueName;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class CheckMinerNameResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckMinerNameResponse", Namespace="http://tempuri.org/", Order=0)]
+        public EthMonitorApp.MonitorService.CheckMinerNameResponseBody Body;
+        
+        public CheckMinerNameResponse() {
+        }
+        
+        public CheckMinerNameResponse(EthMonitorApp.MonitorService.CheckMinerNameResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class CheckMinerNameResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool CheckMinerNameResult;
+        
+        public CheckMinerNameResponseBody() {
+        }
+        
+        public CheckMinerNameResponseBody(bool CheckMinerNameResult) {
+            this.CheckMinerNameResult = CheckMinerNameResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface MonitorServicesSoapChannel : EthMonitorApp.MonitorService.MonitorServicesSoap, System.ServiceModel.IClientChannel {
     }
@@ -1116,6 +1191,31 @@ namespace EthMonitorApp.MonitorService {
             inValue.Body = new EthMonitorApp.MonitorService.InsertMinerRequestBody();
             inValue.Body.minerInfo = minerInfo;
             return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).InsertMinerAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        EthMonitorApp.MonitorService.CheckMinerNameResponse EthMonitorApp.MonitorService.MonitorServicesSoap.CheckMinerName(EthMonitorApp.MonitorService.CheckMinerNameRequest request) {
+            return base.Channel.CheckMinerName(request);
+        }
+        
+        public bool CheckMinerName(string uniqueName) {
+            EthMonitorApp.MonitorService.CheckMinerNameRequest inValue = new EthMonitorApp.MonitorService.CheckMinerNameRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.CheckMinerNameRequestBody();
+            inValue.Body.uniqueName = uniqueName;
+            EthMonitorApp.MonitorService.CheckMinerNameResponse retVal = ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).CheckMinerName(inValue);
+            return retVal.Body.CheckMinerNameResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckMinerNameResponse> EthMonitorApp.MonitorService.MonitorServicesSoap.CheckMinerNameAsync(EthMonitorApp.MonitorService.CheckMinerNameRequest request) {
+            return base.Channel.CheckMinerNameAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckMinerNameResponse> CheckMinerNameAsync(string uniqueName) {
+            EthMonitorApp.MonitorService.CheckMinerNameRequest inValue = new EthMonitorApp.MonitorService.CheckMinerNameRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.CheckMinerNameRequestBody();
+            inValue.Body.uniqueName = uniqueName;
+            return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).CheckMinerNameAsync(inValue);
         }
     }
 }

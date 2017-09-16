@@ -146,7 +146,7 @@ namespace EthMonitorApp
         private void MinerMonitor_Load(object sender, EventArgs e)
         {
             Text = @"EthMonitor.NET | buiducanh.net";
-            txtEmail.Select();
+            txtName.Select();
 
             if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
             {
@@ -197,18 +197,24 @@ namespace EthMonitorApp
 
                     if (minerStats.status != "ERROR")
                     {
-                        // Ghi nhớ Email
-                        if (!File.Exists(DataFilePath))
+                        if (monitorService.CheckMinerName(obj.Name))
                         {
-                            File.Create(DataFilePath).Close();
+                            // Ghi nhớ Email
+                            if (!File.Exists(DataFilePath))
+                            {
+                                File.Create(DataFilePath).Close();
+                            }
+                            File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
+
+                            // Monitoring
+                            thMonitor = new Thread(GetData) { IsBackground = true };
+                            thMonitor.Start();
+
+                            EnableApp(true);
                         }
-                        File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
 
-                        // Monitoring
-                        thMonitor = new Thread(GetData) { IsBackground = true };
-                        thMonitor.Start();
-
-                        EnableApp(true);
+                        txtName.Select();
+                        MessageBox.Show(this, @"Your Unique Name is already exist on EthMonitor.NET !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
