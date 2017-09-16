@@ -52,7 +52,7 @@
             this.txtWallet.Location = new System.Drawing.Point(161, 167);
             this.txtWallet.Name = "txtWallet";
             this.txtWallet.Size = new System.Drawing.Size(389, 20);
-            this.txtWallet.TabIndex = 0;
+            this.txtWallet.TabIndex = 5;
             // 
             // label1
             // 
@@ -70,7 +70,7 @@
             this.linkLabel1.Location = new System.Drawing.Point(157, 196);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(152, 20);
-            this.linkLabel1.TabIndex = 4;
+            this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "http://ethmonitor.net";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
@@ -89,7 +89,7 @@
             this.txtHost.Location = new System.Drawing.Point(161, 66);
             this.txtHost.Name = "txtHost";
             this.txtHost.Size = new System.Drawing.Size(232, 20);
-            this.txtHost.TabIndex = 7;
+            this.txtHost.TabIndex = 1;
             this.txtHost.Text = "http://localhost";
             // 
             // label3
@@ -106,7 +106,7 @@
             this.txtPort.Location = new System.Drawing.Point(434, 66);
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(116, 20);
-            this.txtPort.TabIndex = 9;
+            this.txtPort.TabIndex = 2;
             this.txtPort.Text = "8800";
             // 
             // txtContent
@@ -131,7 +131,7 @@
             this.txtEmail.Location = new System.Drawing.Point(161, 133);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(389, 20);
-            this.txtEmail.TabIndex = 11;
+            this.txtEmail.TabIndex = 4;
             // 
             // btnAbout
             // 
@@ -142,7 +142,7 @@
             this.btnAbout.Location = new System.Drawing.Point(392, 237);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(110, 48);
-            this.btnAbout.TabIndex = 13;
+            this.btnAbout.TabIndex = 9;
             this.btnAbout.Text = "     About";
             this.btnAbout.UseVisualStyleBackColor = true;
             this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
@@ -156,7 +156,7 @@
             this.btnStop.Location = new System.Drawing.Point(267, 237);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(110, 48);
-            this.btnStop.TabIndex = 5;
+            this.btnStop.TabIndex = 8;
             this.btnStop.Text = "     Stop";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
@@ -170,7 +170,7 @@
             this.btnMonitor.Location = new System.Drawing.Point(161, 237);
             this.btnMonitor.Name = "btnMonitor";
             this.btnMonitor.Size = new System.Drawing.Size(100, 48);
-            this.btnMonitor.TabIndex = 2;
+            this.btnMonitor.TabIndex = 7;
             this.btnMonitor.Text = "     Start";
             this.btnMonitor.UseVisualStyleBackColor = true;
             this.btnMonitor.Click += new System.EventHandler(this.btnMonitor_Click);
@@ -208,7 +208,7 @@
             this.txtName.Location = new System.Drawing.Point(161, 101);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(389, 20);
-            this.txtName.TabIndex = 16;
+            this.txtName.TabIndex = 3;
             // 
             // MinerMonitor
             // 
