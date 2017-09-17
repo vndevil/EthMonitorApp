@@ -169,6 +169,7 @@
     <None Include="Resources\stop_32.png" />
     <None Include="Resources\about_32_2.png" />
     <None Include="Resources\ethereum1600.png" />
+    <Content Include="How to use.txt" />
     <Content Include="Huong dan.txt" />
     <Content Include="test.txt" />
   </ItemGroup>

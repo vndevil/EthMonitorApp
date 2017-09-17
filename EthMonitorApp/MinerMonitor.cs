@@ -15,7 +15,9 @@ namespace EthMonitorApp
     {
         #region Fields
 
-        const int SLEEP_TIME = 10000;
+        const int SLEEP_TIME = 15000; // Miliseconds
+        const int STATS_TIME = 10; // Minutes
+
         private Thread thMonitor;
         WebClient client = new WebClient();
         MonitorServicesSoapClient monitorService = new MonitorServicesSoapClient("MonitorServicesSoap");
@@ -58,6 +60,7 @@ namespace EthMonitorApp
                 txtHost.Enabled = false;
                 txtPort.Enabled = false;
                 btnMonitor.Enabled = false;
+                txtName.Enabled = false;
                 txtWallet.Enabled = false;
                 txtEmail.Enabled = false;
                 btnStop.Enabled = true;
@@ -67,6 +70,7 @@ namespace EthMonitorApp
                 txtHost.Enabled = true;
                 txtPort.Enabled = true;
                 txtWallet.Enabled = true;
+                txtName.Enabled = true;
                 txtEmail.Enabled = true;
                 btnMonitor.Enabled = true;
                 btnStop.Enabled = false;
@@ -77,6 +81,35 @@ namespace EthMonitorApp
         {
             try
             {
+                // Miner
+                var miner = new MinerInfo
+                {
+                    Wallet = txtWallet.Text.ToLower().Trim(),
+                    EmailId = txtEmail.Text.ToLower().Trim(),
+                    Name = StringHelper.RemoveSign4VietnameseString(txtName.Text.Trim()),
+                    CreatedDate = DateTime.Now,
+                    StatisticsDate = DateTime.Now
+                };
+
+                // Stats from ethermine.org
+                var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
+                if (obj != null)
+                {
+                    var dateTimeNow = DateTime.Now;
+                    var timeSPan = dateTimeNow - obj.StatsDate;
+                    if (timeSPan.TotalMinutes > STATS_TIME)
+                    {
+                        // Ghi nhớ thời gian Stats
+                        obj.StatsDate = dateTimeNow;
+                        File.Delete(DataFilePath);
+                        File.Create(DataFilePath).Close();
+                        File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
+
+                        
+                        miner = StatsHelper.GetStatsFromEthermine(miner);
+                    }
+                }
+
                 var i = 1;
                 while (true)
                 {
@@ -87,19 +120,6 @@ namespace EthMonitorApp
                     var html = new HtmlAgilityPack.HtmlDocument();
                     html.LoadHtml(content);
                     var doc = html.DocumentNode;
-
-                    // Miner
-                    var miner = new MinerInfo
-                    {
-                        Wallet = txtWallet.Text.ToLower().Trim(),
-                        EmailId = txtEmail.Text.ToLower().Trim(),
-                        Name = StringHelper.RemoveSign4VietnameseString(txtName.Text.Trim()),
-                        CreatedDate = DateTime.Now,
-                        StatisticsDate = DateTime.Now
-                    };
-
-                    // Stats from ethermine.org
-                    miner = StatsHelper.GetStatsFromEthermine(miner);
 
                     // Lấy dữ liệu MinerInfo
                     // Lấy danh sách dòng
@@ -184,8 +204,10 @@ namespace EthMonitorApp
                 var obj = new MonitorObject
                 {
                     Wallet = StringHelper.RemoveSign4VietnameseString(txtWallet.Text.ToLower().Trim()),
-                    Email = StringHelper.RemoveSign4VietnameseString(txtEmail.Text.ToLower().Trim()),
-                    Name = StringHelper.RemoveSign4VietnameseString(txtName.Text.Trim()),
+                    Email = txtEmail.Text.ToLower().Trim(),
+                    Name = txtName.Text.Trim(),
+                    CreatedDate = DateTime.Now,
+                    StatsDate = DateTime.Now
                 };
 
                 if (!string.IsNullOrEmpty(obj.Email) && !string.IsNullOrEmpty(obj.Wallet) && !string.IsNullOrEmpty(obj.Name))

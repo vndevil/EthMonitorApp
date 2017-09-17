@@ -1,13 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EthMonitorApp.MonitorService;
 
 namespace EthMonitorApp
 {
     public class MonitorObject
     {
+        public MonitorObject()
+        {
+            CreatedDate = StatsDate = DateTime.Now;
+        }
+
         public string Email;
         public string Wallet;
         public string Name;
+        public DateTime CreatedDate;
+        public DateTime StatsDate;
     }
 
     public class MinerStats
