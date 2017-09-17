@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace EthMonitorApp
     {
         #region Fields
 
-        const int SLEEP_TIME = 30000;
+        const int SLEEP_TIME = 10000;
         private Thread thMonitor;
         WebClient client = new WebClient();
         MonitorServicesSoapClient monitorService = new MonitorServicesSoapClient("MonitorServicesSoap");
@@ -30,7 +29,7 @@ namespace EthMonitorApp
         {
             InitializeComponent();
 
-            thMonitor = new Thread(GetData) { IsBackground = true };
+            thMonitor = new Thread(SendData) { IsBackground = true };
             MaximizeBox = false;
         }
 
@@ -74,7 +73,7 @@ namespace EthMonitorApp
             }
         }
 
-        private void GetData()
+        private void SendData()
         {
             try
             {
@@ -94,8 +93,13 @@ namespace EthMonitorApp
                     {
                         Wallet = txtWallet.Text.ToLower().Trim(),
                         EmailId = txtEmail.Text.ToLower().Trim(),
-                        Name = StringHelper.RemoveSign4VietnameseString(txtName.Text.Trim())
+                        Name = StringHelper.RemoveSign4VietnameseString(txtName.Text.Trim()),
+                        CreatedDate = DateTime.Now,
+                        StatisticsDate = DateTime.Now
                     };
+
+                    // Stats from ethermine.org
+                    miner = StatsHelper.GetStatsFromEthermine(miner);
 
                     // Lấy dữ liệu MinerInfo
                     // Lấy danh sách dòng
@@ -104,15 +108,10 @@ namespace EthMonitorApp
                     // Xóa cột th
                     arrTrs.RemoveAt(0);
 
-                    var arrWorkers = new List<Worker>();
-                    foreach (var node in arrTrs)
-                    {
-                        // Lấy danh sách cột
-                        var arrCols = node.QuerySelectorAll("td").ToList();
-
-                        // Thêm mới Miner
-                        arrWorkers.Add(new Worker
+                    var arrWorkers =
+                        arrTrs.Select(node => node.QuerySelectorAll("td").ToList()).Select(arrCols => new Worker
                         {
+                            Name = arrCols[0].InnerText,
                             Ip = arrCols[1].InnerText,
                             RunningTime = arrCols[2].InnerText,
                             EthereumStats = arrCols[3].InnerText,
@@ -120,13 +119,13 @@ namespace EthMonitorApp
                             GpuTemperature = arrCols[5].InnerText,
                             Pool = arrCols[6].InnerText,
                             Version = arrCols[7].InnerText,
-                            Comments = arrCols[8].InnerText
-                        });
-                    }
+                            Comments = arrCols[8].InnerText,
+                            CreatedDate = DateTime.Now
+                        }).ToList();
 
                     miner.Workers = arrWorkers.ToArray();
-                    var minerId = monitorService.InsertMiner(miner);
-                    linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerId.ToLower();
+                    var minerUniqueName = monitorService.InsertMiner(miner);
+                    linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerUniqueName.ToLower();
                     SetTextBoxData($"{i}. Sent infomation miner '{miner.Name}' and {arrWorkers.Count} workers to EthMonitor.NET successful at {DateTime.Now}");
                     Thread.Sleep(SLEEP_TIME);
                     i++;
@@ -151,6 +150,7 @@ namespace EthMonitorApp
             if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
             {
                 var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
+                txtName.Text = obj.Name;
                 txtEmail.Text = obj.Email;
                 txtWallet.Text = obj.Wallet;
                 EnableApp(true);
@@ -190,31 +190,20 @@ namespace EthMonitorApp
 
                 if (!string.IsNullOrEmpty(obj.Email) && !string.IsNullOrEmpty(obj.Wallet) && !string.IsNullOrEmpty(obj.Name))
                 {
-                    // Check Wallet
-                    //https://api.ethermine.org/miner/deoco/currentStats
-                    var url = $"/miner/{obj.Wallet}/currentStats";
-                    var minerStats = JsonConvert.DeserializeObject<MinerStats>(client.DownloadString("https://api.ethermine.org" + url));
-
-                    if (minerStats.status != "ERROR")
+                    if (StatsHelper.CheckEthWallet(obj.Wallet))
                     {
-                        if (monitorService.CheckMinerName(obj.Name))
+                        // Ghi nhớ Email
+                        if (!File.Exists(DataFilePath))
                         {
-                            // Ghi nhớ Email
-                            if (!File.Exists(DataFilePath))
-                            {
-                                File.Create(DataFilePath).Close();
-                            }
-                            File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
-
-                            // Monitoring
-                            thMonitor = new Thread(GetData) { IsBackground = true };
-                            thMonitor.Start();
-
-                            EnableApp(true);
+                            File.Create(DataFilePath).Close();
                         }
+                        File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
 
-                        txtName.Select();
-                        MessageBox.Show(this, @"Your Unique Name is already exist on EthMonitor.NET !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // Monitoring
+                        thMonitor = new Thread(SendData) { IsBackground = true };
+                        thMonitor.Start();
+
+                        EnableApp(true);
                     }
                     else
                     {

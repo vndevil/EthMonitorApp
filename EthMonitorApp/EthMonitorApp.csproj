@@ -116,6 +116,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="StatsHelper.cs" />
     <Compile Include="StringHelper.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
@@ -143,9 +144,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\MonitorService\EthMonitorApp.MonitorService.CheckMinerNameResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\MonitorService\EthMonitorApp.MonitorService.InsertMinerResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

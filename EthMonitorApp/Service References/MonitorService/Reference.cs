@@ -35,16 +35,19 @@ namespace EthMonitorApp.MonitorService {
         private EthMonitorApp.MonitorService.Worker[] WorkersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private EthMonitorApp.MonitorService.MinerStatistics MinerStatsField;
+        private EthMonitorApp.MonitorService.MinerStatistics StatsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private EthMonitorApp.MonitorService.MinerHistory[] MinerHistoryField;
+        private EthMonitorApp.MonitorService.MinerHistory[] HistoryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private EthMonitorApp.MonitorService.MinerPayouts[] MinerPayoutsField;
+        private EthMonitorApp.MonitorService.MinerPayouts[] PayoutsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private EthMonitorApp.MonitorService.MinerRounds[] MinerRoundsField;
+        private EthMonitorApp.MonitorService.MinerRounds[] RoundsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private EthMonitorApp.MonitorService.MinerSettings SettingsField;
         
         private System.DateTime CreatedDateField;
         
@@ -113,58 +116,71 @@ namespace EthMonitorApp.MonitorService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
-        public EthMonitorApp.MonitorService.MinerStatistics MinerStats {
+        public EthMonitorApp.MonitorService.MinerStatistics Stats {
             get {
-                return this.MinerStatsField;
+                return this.StatsField;
             }
             set {
-                if ((object.ReferenceEquals(this.MinerStatsField, value) != true)) {
-                    this.MinerStatsField = value;
-                    this.RaisePropertyChanged("MinerStats");
+                if ((object.ReferenceEquals(this.StatsField, value) != true)) {
+                    this.StatsField = value;
+                    this.RaisePropertyChanged("Stats");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
-        public EthMonitorApp.MonitorService.MinerHistory[] MinerHistory {
+        public EthMonitorApp.MonitorService.MinerHistory[] History {
             get {
-                return this.MinerHistoryField;
+                return this.HistoryField;
             }
             set {
-                if ((object.ReferenceEquals(this.MinerHistoryField, value) != true)) {
-                    this.MinerHistoryField = value;
-                    this.RaisePropertyChanged("MinerHistory");
+                if ((object.ReferenceEquals(this.HistoryField, value) != true)) {
+                    this.HistoryField = value;
+                    this.RaisePropertyChanged("History");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
-        public EthMonitorApp.MonitorService.MinerPayouts[] MinerPayouts {
+        public EthMonitorApp.MonitorService.MinerPayouts[] Payouts {
             get {
-                return this.MinerPayoutsField;
+                return this.PayoutsField;
             }
             set {
-                if ((object.ReferenceEquals(this.MinerPayoutsField, value) != true)) {
-                    this.MinerPayoutsField = value;
-                    this.RaisePropertyChanged("MinerPayouts");
+                if ((object.ReferenceEquals(this.PayoutsField, value) != true)) {
+                    this.PayoutsField = value;
+                    this.RaisePropertyChanged("Payouts");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
-        public EthMonitorApp.MonitorService.MinerRounds[] MinerRounds {
+        public EthMonitorApp.MonitorService.MinerRounds[] Rounds {
             get {
-                return this.MinerRoundsField;
+                return this.RoundsField;
             }
             set {
-                if ((object.ReferenceEquals(this.MinerRoundsField, value) != true)) {
-                    this.MinerRoundsField = value;
-                    this.RaisePropertyChanged("MinerRounds");
+                if ((object.ReferenceEquals(this.RoundsField, value) != true)) {
+                    this.RoundsField = value;
+                    this.RaisePropertyChanged("Rounds");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
+        public EthMonitorApp.MonitorService.MinerSettings Settings {
+            get {
+                return this.SettingsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SettingsField, value) != true)) {
+                    this.SettingsField = value;
+                    this.RaisePropertyChanged("Settings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
         public System.DateTime CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -177,7 +193,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=10)]
         public System.DateTime StatisticsDate {
             get {
                 return this.StatisticsDateField;
@@ -213,6 +229,7 @@ namespace EthMonitorApp.MonitorService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds[]))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerSettings))]
     public partial class MinerStatistics : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -451,15 +468,103 @@ namespace EthMonitorApp.MonitorService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MinerSettings", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class MinerSettings : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string emailField;
+        
+        private int monitorField;
+        
+        private long minPayoutField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ipField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string email {
+            get {
+                return this.emailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.emailField, value) != true)) {
+                    this.emailField = value;
+                    this.RaisePropertyChanged("email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int monitor {
+            get {
+                return this.monitorField;
+            }
+            set {
+                if ((this.monitorField.Equals(value) != true)) {
+                    this.monitorField = value;
+                    this.RaisePropertyChanged("monitor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        public long minPayout {
+            get {
+                return this.minPayoutField;
+            }
+            set {
+                if ((this.minPayoutField.Equals(value) != true)) {
+                    this.minPayoutField = value;
+                    this.RaisePropertyChanged("minPayout");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string ip {
+            get {
+                return this.ipField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ipField, value) != true)) {
+                    this.ipField = value;
+                    this.RaisePropertyChanged("ip");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Worker", Namespace="http://tempuri.org/")]
     [System.SerializableAttribute()]
     public partial class Worker : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
@@ -501,19 +606,6 @@ namespace EthMonitorApp.MonitorService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string EmailId {
-            get {
-                return this.EmailIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailIdField, value) != true)) {
-                    this.EmailIdField = value;
-                    this.RaisePropertyChanged("EmailId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
         public string Name {
             get {
                 return this.NameField;
@@ -526,7 +618,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
         public string Ip {
             get {
                 return this.IpField;
@@ -539,7 +631,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
         public string RunningTime {
             get {
                 return this.RunningTimeField;
@@ -552,7 +644,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
         public string EthereumStats {
             get {
                 return this.EthereumStatsField;
@@ -565,7 +657,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
         public string GpuTemperature {
             get {
                 return this.GpuTemperatureField;
@@ -578,7 +670,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
         public string Pool {
             get {
                 return this.PoolField;
@@ -591,7 +683,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
         public string Version {
             get {
                 return this.VersionField;
@@ -604,7 +696,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
         public string Comments {
             get {
                 return this.CommentsField;
@@ -617,7 +709,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
         public string DcrInfo {
             get {
                 return this.DcrInfoField;
@@ -630,7 +722,7 @@ namespace EthMonitorApp.MonitorService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
         public System.DateTime CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -815,6 +907,7 @@ namespace EthMonitorApp.MonitorService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts[]))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds[]))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerSettings))]
     public partial class MinerPayouts : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -930,6 +1023,7 @@ namespace EthMonitorApp.MonitorService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts[]))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerPayouts))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerRounds[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EthMonitorApp.MonitorService.MinerSettings))]
     public partial class MinerRounds : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -996,13 +1090,6 @@ namespace EthMonitorApp.MonitorService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertMiner", ReplyAction="*")]
         System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> InsertMinerAsync(EthMonitorApp.MonitorService.InsertMinerRequest request);
-        
-        // CODEGEN: Generating message contract since element name uniqueName from namespace http://tempuri.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckMinerName", ReplyAction="*")]
-        EthMonitorApp.MonitorService.CheckMinerNameResponse CheckMinerName(EthMonitorApp.MonitorService.CheckMinerNameRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckMinerName", ReplyAction="*")]
-        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckMinerNameResponse> CheckMinerNameAsync(EthMonitorApp.MonitorService.CheckMinerNameRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1073,74 +1160,6 @@ namespace EthMonitorApp.MonitorService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class CheckMinerNameRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckMinerName", Namespace="http://tempuri.org/", Order=0)]
-        public EthMonitorApp.MonitorService.CheckMinerNameRequestBody Body;
-        
-        public CheckMinerNameRequest() {
-        }
-        
-        public CheckMinerNameRequest(EthMonitorApp.MonitorService.CheckMinerNameRequestBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class CheckMinerNameRequestBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string uniqueName;
-        
-        public CheckMinerNameRequestBody() {
-        }
-        
-        public CheckMinerNameRequestBody(string uniqueName) {
-            this.uniqueName = uniqueName;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class CheckMinerNameResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckMinerNameResponse", Namespace="http://tempuri.org/", Order=0)]
-        public EthMonitorApp.MonitorService.CheckMinerNameResponseBody Body;
-        
-        public CheckMinerNameResponse() {
-        }
-        
-        public CheckMinerNameResponse(EthMonitorApp.MonitorService.CheckMinerNameResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class CheckMinerNameResponseBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
-        public bool CheckMinerNameResult;
-        
-        public CheckMinerNameResponseBody() {
-        }
-        
-        public CheckMinerNameResponseBody(bool CheckMinerNameResult) {
-            this.CheckMinerNameResult = CheckMinerNameResult;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface MonitorServicesSoapChannel : EthMonitorApp.MonitorService.MonitorServicesSoap, System.ServiceModel.IClientChannel {
     }
@@ -1191,31 +1210,6 @@ namespace EthMonitorApp.MonitorService {
             inValue.Body = new EthMonitorApp.MonitorService.InsertMinerRequestBody();
             inValue.Body.minerInfo = minerInfo;
             return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).InsertMinerAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        EthMonitorApp.MonitorService.CheckMinerNameResponse EthMonitorApp.MonitorService.MonitorServicesSoap.CheckMinerName(EthMonitorApp.MonitorService.CheckMinerNameRequest request) {
-            return base.Channel.CheckMinerName(request);
-        }
-        
-        public bool CheckMinerName(string uniqueName) {
-            EthMonitorApp.MonitorService.CheckMinerNameRequest inValue = new EthMonitorApp.MonitorService.CheckMinerNameRequest();
-            inValue.Body = new EthMonitorApp.MonitorService.CheckMinerNameRequestBody();
-            inValue.Body.uniqueName = uniqueName;
-            EthMonitorApp.MonitorService.CheckMinerNameResponse retVal = ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).CheckMinerName(inValue);
-            return retVal.Body.CheckMinerNameResult;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckMinerNameResponse> EthMonitorApp.MonitorService.MonitorServicesSoap.CheckMinerNameAsync(EthMonitorApp.MonitorService.CheckMinerNameRequest request) {
-            return base.Channel.CheckMinerNameAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckMinerNameResponse> CheckMinerNameAsync(string uniqueName) {
-            EthMonitorApp.MonitorService.CheckMinerNameRequest inValue = new EthMonitorApp.MonitorService.CheckMinerNameRequest();
-            inValue.Body = new EthMonitorApp.MonitorService.CheckMinerNameRequestBody();
-            inValue.Body.uniqueName = uniqueName;
-            return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).CheckMinerNameAsync(inValue);
         }
     }
 }

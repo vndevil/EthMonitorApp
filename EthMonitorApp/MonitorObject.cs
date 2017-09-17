@@ -1,4 +1,7 @@
-﻿namespace EthMonitorApp
+﻿using System.Collections.Generic;
+using EthMonitorApp.MonitorService;
+
+namespace EthMonitorApp
 {
     public class MonitorObject
     {
@@ -7,27 +10,38 @@
         public string Name;
     }
 
-    public class Data
-    {
-        public int time { get; set; }
-        public int lastSeen { get; set; }
-        public int reportedHashrate { get; set; }
-        public double currentHashrate { get; set; }
-        public int validShares { get; set; }
-        public int invalidShares { get; set; }
-        public int staleShares { get; set; }
-        public double averageHashrate { get; set; }
-        public int activeWorkers { get; set; }
-        public long unpaid { get; set; }
-        public object unconfirmed { get; set; }
-        public double coinsPerMin { get; set; }
-        public double usdPerMin { get; set; }
-        public double btcPerMin { get; set; }
-    }
-
     public class MinerStats
     {
         public string status { get; set; }
-        public Data data { get; set; }
+    }
+
+    public class SettingsReturnData
+    {
+        public string status { get; set; }
+        public MinerSettings data { get; set; }
+    }
+
+    public class StatsReturnData
+    {
+        public string status { get; set; }
+        public MinerStatistics data { get; set; }
+    }
+
+    public class HistoryReturnData
+    {
+        public string status { get; set; }
+        public List<MinerHistory> data { get; set; }
+    }
+
+    public class RoundReturnData
+    {
+        public string status { get; set; }
+        public List<MinerRounds> data { get; set; }
+    }
+
+    public class PayoutReturnData
+    {
+        public string status { get; set; }
+        public List<MinerPayouts> data { get; set; }
     }
 }

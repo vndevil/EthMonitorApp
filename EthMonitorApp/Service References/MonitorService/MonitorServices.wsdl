@@ -15,10 +15,11 @@
           <s:element minOccurs="0" maxOccurs="1" name="EmailId" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Workers" type="tns:ArrayOfWorker" />
-          <s:element minOccurs="0" maxOccurs="1" name="MinerStats" type="tns:MinerStatistics" />
-          <s:element minOccurs="0" maxOccurs="1" name="MinerHistory" type="tns:ArrayOfMinerHistory" />
-          <s:element minOccurs="0" maxOccurs="1" name="MinerPayouts" type="tns:ArrayOfMinerPayouts" />
-          <s:element minOccurs="0" maxOccurs="1" name="MinerRounds" type="tns:ArrayOfMinerRounds" />
+          <s:element minOccurs="0" maxOccurs="1" name="Stats" type="tns:MinerStatistics" />
+          <s:element minOccurs="0" maxOccurs="1" name="History" type="tns:ArrayOfMinerHistory" />
+          <s:element minOccurs="0" maxOccurs="1" name="Payouts" type="tns:ArrayOfMinerPayouts" />
+          <s:element minOccurs="0" maxOccurs="1" name="Rounds" type="tns:ArrayOfMinerRounds" />
+          <s:element minOccurs="0" maxOccurs="1" name="Settings" type="tns:MinerSettings" />
           <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
           <s:element minOccurs="1" maxOccurs="1" name="StatisticsDate" type="s:dateTime" />
         </s:sequence>
@@ -30,7 +31,6 @@
       </s:complexType>
       <s:complexType name="Worker">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="EmailId" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Ip" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="RunningTime" type="s:string" />
@@ -103,24 +103,18 @@
           <s:element minOccurs="0" maxOccurs="1" name="amount" />
         </s:sequence>
       </s:complexType>
+      <s:complexType name="MinerSettings">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="monitor" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="minPayout" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ip" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="InsertMinerResponse">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="InsertMinerResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="CheckMinerName">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="uniqueName" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="CheckMinerNameResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="CheckMinerNameResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -132,20 +126,10 @@
   <wsdl:message name="InsertMinerSoapOut">
     <wsdl:part name="parameters" element="tns:InsertMinerResponse" />
   </wsdl:message>
-  <wsdl:message name="CheckMinerNameSoapIn">
-    <wsdl:part name="parameters" element="tns:CheckMinerName" />
-  </wsdl:message>
-  <wsdl:message name="CheckMinerNameSoapOut">
-    <wsdl:part name="parameters" element="tns:CheckMinerNameResponse" />
-  </wsdl:message>
   <wsdl:portType name="MonitorServicesSoap">
     <wsdl:operation name="InsertMiner">
       <wsdl:input message="tns:InsertMinerSoapIn" />
       <wsdl:output message="tns:InsertMinerSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="CheckMinerName">
-      <wsdl:input message="tns:CheckMinerNameSoapIn" />
-      <wsdl:output message="tns:CheckMinerNameSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MonitorServicesSoap" type="tns:MonitorServicesSoap">
@@ -159,29 +143,11 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CheckMinerName">
-      <soap:operation soapAction="http://tempuri.org/CheckMinerName" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="MonitorServicesSoap12" type="tns:MonitorServicesSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="InsertMiner">
       <soap12:operation soapAction="http://tempuri.org/InsertMiner" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CheckMinerName">
-      <soap12:operation soapAction="http://tempuri.org/CheckMinerName" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
