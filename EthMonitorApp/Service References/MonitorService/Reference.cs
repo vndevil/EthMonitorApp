@@ -1084,27 +1084,61 @@ namespace EthMonitorApp.MonitorService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MonitorService.MonitorServicesSoap")]
     public interface MonitorServicesSoap {
         
-        // CODEGEN: Generating message contract since element name minerInfo from namespace http://tempuri.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertMiner", ReplyAction="*")]
-        EthMonitorApp.MonitorService.InsertMinerResponse InsertMiner(EthMonitorApp.MonitorService.InsertMinerRequest request);
+        // CODEGEN: Generating message contract since element name CheckVerionResult from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckVerion", ReplyAction="*")]
+        EthMonitorApp.MonitorService.CheckVerionResponse CheckVerion(EthMonitorApp.MonitorService.CheckVerionRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/InsertMiner", ReplyAction="*")]
-        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> InsertMinerAsync(EthMonitorApp.MonitorService.InsertMinerRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckVerion", ReplyAction="*")]
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckVerionResponse> CheckVerionAsync(EthMonitorApp.MonitorService.CheckVerionRequest request);
+        
+        // CODEGEN: Generating message contract since element name minerInfo from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SendtMiner", ReplyAction="*")]
+        EthMonitorApp.MonitorService.SendtMinerResponse SendtMiner(EthMonitorApp.MonitorService.SendtMinerRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SendtMiner", ReplyAction="*")]
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.SendtMinerResponse> SendtMinerAsync(EthMonitorApp.MonitorService.SendtMinerRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class InsertMinerRequest {
+    public partial class CheckVerionRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertMiner", Namespace="http://tempuri.org/", Order=0)]
-        public EthMonitorApp.MonitorService.InsertMinerRequestBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckVerion", Namespace="http://tempuri.org/", Order=0)]
+        public EthMonitorApp.MonitorService.CheckVerionRequestBody Body;
         
-        public InsertMinerRequest() {
+        public CheckVerionRequest() {
         }
         
-        public InsertMinerRequest(EthMonitorApp.MonitorService.InsertMinerRequestBody Body) {
+        public CheckVerionRequest(EthMonitorApp.MonitorService.CheckVerionRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class CheckVerionRequestBody {
+        
+        public CheckVerionRequestBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class CheckVerionResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckVerionResponse", Namespace="http://tempuri.org/", Order=0)]
+        public EthMonitorApp.MonitorService.CheckVerionResponseBody Body;
+        
+        public CheckVerionResponse() {
+        }
+        
+        public CheckVerionResponse(EthMonitorApp.MonitorService.CheckVerionResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -1113,15 +1147,49 @@ namespace EthMonitorApp.MonitorService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class InsertMinerRequestBody {
+    public partial class CheckVerionResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string CheckVerionResult;
+        
+        public CheckVerionResponseBody() {
+        }
+        
+        public CheckVerionResponseBody(string CheckVerionResult) {
+            this.CheckVerionResult = CheckVerionResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SendtMinerRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendtMiner", Namespace="http://tempuri.org/", Order=0)]
+        public EthMonitorApp.MonitorService.SendtMinerRequestBody Body;
+        
+        public SendtMinerRequest() {
+        }
+        
+        public SendtMinerRequest(EthMonitorApp.MonitorService.SendtMinerRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class SendtMinerRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
         public EthMonitorApp.MonitorService.MinerInfo minerInfo;
         
-        public InsertMinerRequestBody() {
+        public SendtMinerRequestBody() {
         }
         
-        public InsertMinerRequestBody(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
+        public SendtMinerRequestBody(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
             this.minerInfo = minerInfo;
         }
     }
@@ -1130,15 +1198,15 @@ namespace EthMonitorApp.MonitorService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class InsertMinerResponse {
+    public partial class SendtMinerResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertMinerResponse", Namespace="http://tempuri.org/", Order=0)]
-        public EthMonitorApp.MonitorService.InsertMinerResponseBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendtMinerResponse", Namespace="http://tempuri.org/", Order=0)]
+        public EthMonitorApp.MonitorService.SendtMinerResponseBody Body;
         
-        public InsertMinerResponse() {
+        public SendtMinerResponse() {
         }
         
-        public InsertMinerResponse(EthMonitorApp.MonitorService.InsertMinerResponseBody Body) {
+        public SendtMinerResponse(EthMonitorApp.MonitorService.SendtMinerResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -1147,16 +1215,16 @@ namespace EthMonitorApp.MonitorService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class InsertMinerResponseBody {
+    public partial class SendtMinerResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string InsertMinerResult;
+        public string SendtMinerResult;
         
-        public InsertMinerResponseBody() {
+        public SendtMinerResponseBody() {
         }
         
-        public InsertMinerResponseBody(string InsertMinerResult) {
-            this.InsertMinerResult = InsertMinerResult;
+        public SendtMinerResponseBody(string SendtMinerResult) {
+            this.SendtMinerResult = SendtMinerResult;
         }
     }
     
@@ -1188,28 +1256,51 @@ namespace EthMonitorApp.MonitorService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        EthMonitorApp.MonitorService.InsertMinerResponse EthMonitorApp.MonitorService.MonitorServicesSoap.InsertMiner(EthMonitorApp.MonitorService.InsertMinerRequest request) {
-            return base.Channel.InsertMiner(request);
+        EthMonitorApp.MonitorService.CheckVerionResponse EthMonitorApp.MonitorService.MonitorServicesSoap.CheckVerion(EthMonitorApp.MonitorService.CheckVerionRequest request) {
+            return base.Channel.CheckVerion(request);
         }
         
-        public string InsertMiner(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
-            EthMonitorApp.MonitorService.InsertMinerRequest inValue = new EthMonitorApp.MonitorService.InsertMinerRequest();
-            inValue.Body = new EthMonitorApp.MonitorService.InsertMinerRequestBody();
-            inValue.Body.minerInfo = minerInfo;
-            EthMonitorApp.MonitorService.InsertMinerResponse retVal = ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).InsertMiner(inValue);
-            return retVal.Body.InsertMinerResult;
+        public string CheckVerion() {
+            EthMonitorApp.MonitorService.CheckVerionRequest inValue = new EthMonitorApp.MonitorService.CheckVerionRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.CheckVerionRequestBody();
+            EthMonitorApp.MonitorService.CheckVerionResponse retVal = ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).CheckVerion(inValue);
+            return retVal.Body.CheckVerionResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> EthMonitorApp.MonitorService.MonitorServicesSoap.InsertMinerAsync(EthMonitorApp.MonitorService.InsertMinerRequest request) {
-            return base.Channel.InsertMinerAsync(request);
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckVerionResponse> EthMonitorApp.MonitorService.MonitorServicesSoap.CheckVerionAsync(EthMonitorApp.MonitorService.CheckVerionRequest request) {
+            return base.Channel.CheckVerionAsync(request);
         }
         
-        public System.Threading.Tasks.Task<EthMonitorApp.MonitorService.InsertMinerResponse> InsertMinerAsync(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
-            EthMonitorApp.MonitorService.InsertMinerRequest inValue = new EthMonitorApp.MonitorService.InsertMinerRequest();
-            inValue.Body = new EthMonitorApp.MonitorService.InsertMinerRequestBody();
+        public System.Threading.Tasks.Task<EthMonitorApp.MonitorService.CheckVerionResponse> CheckVerionAsync() {
+            EthMonitorApp.MonitorService.CheckVerionRequest inValue = new EthMonitorApp.MonitorService.CheckVerionRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.CheckVerionRequestBody();
+            return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).CheckVerionAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        EthMonitorApp.MonitorService.SendtMinerResponse EthMonitorApp.MonitorService.MonitorServicesSoap.SendtMiner(EthMonitorApp.MonitorService.SendtMinerRequest request) {
+            return base.Channel.SendtMiner(request);
+        }
+        
+        public string SendtMiner(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
+            EthMonitorApp.MonitorService.SendtMinerRequest inValue = new EthMonitorApp.MonitorService.SendtMinerRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.SendtMinerRequestBody();
             inValue.Body.minerInfo = minerInfo;
-            return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).InsertMinerAsync(inValue);
+            EthMonitorApp.MonitorService.SendtMinerResponse retVal = ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).SendtMiner(inValue);
+            return retVal.Body.SendtMinerResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<EthMonitorApp.MonitorService.SendtMinerResponse> EthMonitorApp.MonitorService.MonitorServicesSoap.SendtMinerAsync(EthMonitorApp.MonitorService.SendtMinerRequest request) {
+            return base.Channel.SendtMinerAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<EthMonitorApp.MonitorService.SendtMinerResponse> SendtMinerAsync(EthMonitorApp.MonitorService.MinerInfo minerInfo) {
+            EthMonitorApp.MonitorService.SendtMinerRequest inValue = new EthMonitorApp.MonitorService.SendtMinerRequest();
+            inValue.Body = new EthMonitorApp.MonitorService.SendtMinerRequestBody();
+            inValue.Body.minerInfo = minerInfo;
+            return ((EthMonitorApp.MonitorService.MonitorServicesSoap)(this)).SendtMinerAsync(inValue);
         }
     }
 }

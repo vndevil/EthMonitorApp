@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using System.Net;
 using EthMonitorApp.MonitorService;
 using Newtonsoft.Json;
@@ -7,6 +7,9 @@ namespace EthMonitorApp
 {
     public class StatsHelper
     {
+        private const int STATS_TIME = 2; // Minutes
+
+        public static DateTime StatsDate { set; get; }
         private static WebClient client = new WebClient();
 
         public static bool CheckEthWallet(string wallet)
@@ -25,55 +28,64 @@ namespace EthMonitorApp
 
         public static string GetApiData(string requestUriUrl)
         {
-            var request = (HttpWebRequest)WebRequest.Create(requestUriUrl);
-            request.ServicePoint.BindIPEndPointDelegate = BindIPEndPointCallback;
-            var response = (HttpWebResponse)request.GetResponse();
-            var reader = new StreamReader(response.GetResponseStream());
-            return reader.ReadToEnd();
+            return client.DownloadString(requestUriUrl);
+            //var request = (HttpWebRequest)WebRequest.Create(requestUriUrl);
+            //request.ServicePoint.BindIPEndPointDelegate = BindIPEndPointCallback;
+            //var response = (HttpWebResponse)request.GetResponse();
+            //var reader = new StreamReader(response.GetResponseStream());
+            //return reader.ReadToEnd();
         }
 
         public static MinerInfo GetStatsFromEthermine(MinerInfo minerInfo)
         {
-            // History
-            string url = $"/miner/{minerInfo.Wallet}/history";
-            var data = GetApiData("https://api.ethermine.org" + url);
-            var historyStats = JsonConvert.DeserializeObject<HistoryReturnData>(data);
-            minerInfo.History = historyStats.data.ToArray();
-
-            // currentStats
-            url = $"/miner/{minerInfo.Wallet}/currentStats";
-            data = GetApiData("https://api.ethermine.org" + url);
-            var minerStats = JsonConvert.DeserializeObject<StatsReturnData>(data);
-            minerInfo.Stats = minerStats.data;
-
-            // Rounds
-            url = $"/miner/{minerInfo.Wallet}/rounds";
-            data = GetApiData("https://api.ethermine.org" + url);
-            var rounds = JsonConvert.DeserializeObject<RoundReturnData>(data);
-            minerInfo.Rounds = rounds.data.ToArray();
-
-            // Payouts
-            url = $"/miner/{minerInfo.Wallet}/payouts";
-            data = GetApiData("https://api.ethermine.org" + url);
-            var payouts = JsonConvert.DeserializeObject<PayoutReturnData>(data);
-            minerInfo.Payouts = payouts.data.ToArray();
-
-            // Settings
-            url = $"/miner/{minerInfo.Wallet}/settings";
-            data = GetApiData("https://api.ethermine.org" + url);
-            MinerSettings settings;
-            if (!data.Contains("NO DATA"))
+            var timeSpan = DateTime.Now - StatsDate;
+            if (timeSpan.Minutes > STATS_TIME)
             {
-                settings = JsonConvert.DeserializeObject<SettingsReturnData>(data).data;
-            }
-            else
-            {
-                settings = new MinerSettings
+                // Đặt lại thời gian
+                StatsDate = DateTime.Now;
+
+                // History
+                string url = $"/miner/{minerInfo.Wallet}/history";
+                var data = GetApiData("https://api.ethermine.org" + url);
+                var historyStats = JsonConvert.DeserializeObject<HistoryReturnData>(data);
+                minerInfo.History = historyStats.data.ToArray();
+
+                // currentStats
+                url = $"/miner/{minerInfo.Wallet}/currentStats";
+                data = GetApiData("https://api.ethermine.org" + url);
+                var minerStats = JsonConvert.DeserializeObject<StatsReturnData>(data);
+                minerInfo.Stats = minerStats.data;
+
+                // Rounds
+                url = $"/miner/{minerInfo.Wallet}/rounds";
+                data = GetApiData("https://api.ethermine.org" + url);
+                var rounds = JsonConvert.DeserializeObject<RoundReturnData>(data);
+                minerInfo.Rounds = rounds.data.ToArray();
+
+                // Payouts
+                url = $"/miner/{minerInfo.Wallet}/payouts";
+                data = GetApiData("https://api.ethermine.org" + url);
+                var payouts = JsonConvert.DeserializeObject<PayoutReturnData>(data);
+                minerInfo.Payouts = payouts.data.ToArray();
+
+                // Settings
+                url = $"/miner/{minerInfo.Wallet}/settings";
+                data = GetApiData("https://api.ethermine.org" + url);
+                MinerSettings settings;
+                if (!data.Contains("NO DATA"))
                 {
-                    minPayout = 1,
-                };
+                    settings = JsonConvert.DeserializeObject<SettingsReturnData>(data).data;
+                }
+                else
+                {
+                    settings = new MinerSettings
+                    {
+                        minPayout = 1,
+                    };
+                }
+                minerInfo.Settings = settings;
             }
-            minerInfo.Settings = settings;
+            
             return minerInfo;
         }
     }

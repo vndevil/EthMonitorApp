@@ -15,10 +15,11 @@ namespace EthMonitorApp
     {
         #region Fields
 
-        const int SLEEP_TIME = 15000; // Miliseconds
-        const int STATS_TIME = 10; // Minutes
+        const string APP_VERSION = "1.2";
+        const int SLEEP_TIME_MONITOR = 15000; // Miliseconds
+        const int SLEEP_TIME_COMMAND = 60000; // Miliseconds
 
-        private Thread thMonitor;
+        private Thread thMonitor, thCommand;
         WebClient client = new WebClient();
         MonitorServicesSoapClient monitorService = new MonitorServicesSoapClient("MonitorServicesSoap");
         private string DataFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Data.dll";
@@ -32,6 +33,7 @@ namespace EthMonitorApp
             InitializeComponent();
 
             thMonitor = new Thread(SendData) { IsBackground = true };
+            thCommand = new Thread(GetCommands) { IsBackground = true };
             MaximizeBox = false;
         }
 
@@ -51,7 +53,7 @@ namespace EthMonitorApp
             }
         }
 
-        public void EnableApp(bool isStart)
+        public void RunningApp(bool isStart)
         {
             txtContent.Text = string.Empty;
 
@@ -77,11 +79,64 @@ namespace EthMonitorApp
             }
         }
 
+        private bool IsCurrentVersion(out string currentVersion)
+        {
+            // Check version
+            currentVersion = monitorService.CheckVerion();
+
+            // true: đúng phiên bản
+            // false: sai phiên bản
+            return APP_VERSION == currentVersion;
+        }
+
+        private void AlertVersion(string currentVersion)
+        {
+            var message = "Your EthMonitorApp is out of date, new verion is " + currentVersion + ". Click OK to go EthMonitor.NET download new EthMonitorApp version.";
+            var caption = "EthMonitorApp Update !!!";
+            var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+            if (result == DialogResult.Yes)
+            {
+                Process.Start(new ProcessStartInfo("http://ethmonitor.net"));
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+        private void GetCommands()
+        {
+
+            try
+            {
+                while (true)
+                {
+                    string currentVersion;
+                    if (!IsCurrentVersion(out currentVersion))
+                    {
+                        if (thMonitor.IsAlive)
+                        {
+                            thMonitor.Abort();
+                            RunningApp(false);
+                        }
+
+                        AlertVersion(currentVersion);
+                    }
+                    Thread.Sleep(SLEEP_TIME_COMMAND);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR WHEN GetCommands: " + ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void SendData()
         {
             try
             {
-                // Miner
+                // New MinerInfo
                 var miner = new MinerInfo
                 {
                     Wallet = txtWallet.Text.ToLower().Trim(),
@@ -92,24 +147,26 @@ namespace EthMonitorApp
                 };
 
                 // Stats from ethermine.org
-                var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
-                if (obj != null)
+                try
                 {
-                    var dateTimeNow = DateTime.Now;
-                    var timeSPan = dateTimeNow - obj.StatsDate;
-                    if (timeSPan.TotalMinutes > STATS_TIME)
+                    var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
+                    if (obj != null)
                     {
                         // Ghi nhớ thời gian Stats
-                        obj.StatsDate = dateTimeNow;
+                        obj.StatsDate = DateTime.Now;
                         File.Delete(DataFilePath);
                         File.Create(DataFilePath).Close();
                         File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
 
-                        
                         miner = StatsHelper.GetStatsFromEthermine(miner);
                     }
                 }
+                catch (Exception ex)
+                {
+                    SetTextBoxData($"Error \"{ex.Message}\" when get data from Ethermine.org with wallet: {miner.Wallet}");
+                }
 
+                // Monitor Workers
                 var i = 1;
                 while (true)
                 {
@@ -144,10 +201,10 @@ namespace EthMonitorApp
                         }).ToList();
 
                     miner.Workers = arrWorkers.ToArray();
-                    var minerUniqueName = monitorService.InsertMiner(miner);
+                    var minerUniqueName = monitorService.SendtMiner(miner);
                     linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerUniqueName.ToLower();
                     SetTextBoxData($"{i}. Sent infomation miner '{miner.Name}' and {arrWorkers.Count} workers to EthMonitor.NET successful at {DateTime.Now}");
-                    Thread.Sleep(SLEEP_TIME);
+                    Thread.Sleep(SLEEP_TIME_MONITOR);
                     i++;
                 }
             }
@@ -167,25 +224,35 @@ namespace EthMonitorApp
             Text = @"EthMonitor.NET | buiducanh.net";
             txtName.Select();
 
-            if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
+            string currentVersion;
+            if (IsCurrentVersion(out currentVersion))
             {
-                var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
-                txtName.Text = obj.Name;
-                txtEmail.Text = obj.Email;
-                txtWallet.Text = obj.Wallet;
-                EnableApp(true);
-                thMonitor.Start();
+                if (File.Exists(DataFilePath) && !string.IsNullOrEmpty(File.ReadAllText(DataFilePath)))
+                {
+                    var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
+                    txtName.Text = obj.Name;
+                    txtEmail.Text = obj.Email;
+                    txtWallet.Text = obj.Wallet;
+                    RunningApp(true);
+                    thMonitor.Start();
+                    thCommand.Start();
+                }
+                else
+                {
+                    RunningApp(false);
+                    thMonitor.Abort();
+                }
             }
             else
             {
-                EnableApp(false);
-                thMonitor.Abort();
+                AlertVersion(currentVersion);
             }
         }
 
         private void MinerMonitor_FormClosed(object sender, FormClosedEventArgs e)
         {
             thMonitor?.Abort();
+            thCommand?.Abort();
         }
 
         #endregion
@@ -201,43 +268,56 @@ namespace EthMonitorApp
         {
             try
             {
-                var obj = new MonitorObject
+                string currentVersion;
+                if (IsCurrentVersion(out currentVersion))
                 {
-                    Wallet = StringHelper.RemoveSign4VietnameseString(txtWallet.Text.ToLower().Trim()),
-                    Email = txtEmail.Text.ToLower().Trim(),
-                    Name = txtName.Text.Trim(),
-                    CreatedDate = DateTime.Now,
-                    StatsDate = DateTime.Now
-                };
-
-                if (!string.IsNullOrEmpty(obj.Email) && !string.IsNullOrEmpty(obj.Wallet) && !string.IsNullOrEmpty(obj.Name))
-                {
-                    if (StatsHelper.CheckEthWallet(obj.Wallet))
+                    var obj = new MonitorObject
                     {
-                        // Ghi nhớ Email
-                        if (!File.Exists(DataFilePath))
+                        Wallet = StringHelper.RemoveSign4VietnameseString(txtWallet.Text.ToLower().Trim()),
+                        Email = txtEmail.Text.ToLower().Trim(),
+                        Name = txtName.Text.Trim(),
+                        CreatedDate = DateTime.Now,
+                        StatsDate = DateTime.Now
+                    };
+
+                    if (!string.IsNullOrEmpty(obj.Email) && !string.IsNullOrEmpty(obj.Wallet) && !string.IsNullOrEmpty(obj.Name))
+                    {
+                        if (StatsHelper.CheckEthWallet(obj.Wallet))
                         {
-                            File.Create(DataFilePath).Close();
+                            // Ghi nhớ Email
+                            if (!File.Exists(DataFilePath))
+                            {
+                                File.Create(DataFilePath).Close();
+                            }
+                            File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
+
+                            // Monitoring
+                            thMonitor = new Thread(SendData) { IsBackground = true };
+                            thMonitor.Start();
+                            if (!thCommand.IsAlive)
+                            {
+                                thCommand = new Thread(GetCommands) { IsBackground = true };
+                                thCommand.Start();
+                            }
+                            RunningApp(true);
                         }
-                        File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
-
-                        // Monitoring
-                        thMonitor = new Thread(SendData) { IsBackground = true };
-                        thMonitor.Start();
-
-                        EnableApp(true);
+                        else
+                        {
+                            txtWallet.Select();
+                            MessageBox.Show(this, @"Your ETH Wallet not found on Ethermine.org !!!", @"Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
-                        txtWallet.Select();
-                        MessageBox.Show(this, @"Your ETH Wallet not found on Ethermine.org !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        RunningApp(false);
+                        txtName.Select();
+                        MessageBox.Show(this, @"You need to enter your Name, Email and ETH Wallet !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    EnableApp(false);
-                    txtName.Select();
-                    MessageBox.Show(this, @"You need to enter your Name, Email and ETH Wallet !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    AlertVersion(currentVersion);
                 }
             }
             catch (Exception ex)
@@ -248,8 +328,9 @@ namespace EthMonitorApp
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            EnableApp(false);
+            RunningApp(false);
             thMonitor.Abort();
+            thCommand.Abort();
         }
 
         private void btnAbout_Click(object sender, EventArgs e)

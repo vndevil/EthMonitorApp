@@ -14,6 +14,8 @@ namespace EthMonitorApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MinerMonitor());
+
+            StatsHelper.StatsDate = DateTime.Now;
         }
     }
 }

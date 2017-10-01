@@ -2,7 +2,17 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-      <s:element name="InsertMiner">
+      <s:element name="CheckVerion">
+        <s:complexType />
+      </s:element>
+      <s:element name="CheckVerionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckVerionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendtMiner">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="minerInfo" type="tns:MinerInfo" />
@@ -111,31 +121,50 @@
           <s:element minOccurs="0" maxOccurs="1" name="ip" type="s:string" />
         </s:sequence>
       </s:complexType>
-      <s:element name="InsertMinerResponse">
+      <s:element name="SendtMinerResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="InsertMinerResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SendtMinerResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="InsertMinerSoapIn">
-    <wsdl:part name="parameters" element="tns:InsertMiner" />
+  <wsdl:message name="CheckVerionSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckVerion" />
   </wsdl:message>
-  <wsdl:message name="InsertMinerSoapOut">
-    <wsdl:part name="parameters" element="tns:InsertMinerResponse" />
+  <wsdl:message name="CheckVerionSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckVerionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendtMinerSoapIn">
+    <wsdl:part name="parameters" element="tns:SendtMiner" />
+  </wsdl:message>
+  <wsdl:message name="SendtMinerSoapOut">
+    <wsdl:part name="parameters" element="tns:SendtMinerResponse" />
   </wsdl:message>
   <wsdl:portType name="MonitorServicesSoap">
-    <wsdl:operation name="InsertMiner">
-      <wsdl:input message="tns:InsertMinerSoapIn" />
-      <wsdl:output message="tns:InsertMinerSoapOut" />
+    <wsdl:operation name="CheckVerion">
+      <wsdl:input message="tns:CheckVerionSoapIn" />
+      <wsdl:output message="tns:CheckVerionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendtMiner">
+      <wsdl:input message="tns:SendtMinerSoapIn" />
+      <wsdl:output message="tns:SendtMinerSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MonitorServicesSoap" type="tns:MonitorServicesSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="InsertMiner">
-      <soap:operation soapAction="http://tempuri.org/InsertMiner" style="document" />
+    <wsdl:operation name="CheckVerion">
+      <soap:operation soapAction="http://tempuri.org/CheckVerion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendtMiner">
+      <soap:operation soapAction="http://tempuri.org/SendtMiner" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -146,8 +175,17 @@
   </wsdl:binding>
   <wsdl:binding name="MonitorServicesSoap12" type="tns:MonitorServicesSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="InsertMiner">
-      <soap12:operation soapAction="http://tempuri.org/InsertMiner" style="document" />
+    <wsdl:operation name="CheckVerion">
+      <soap12:operation soapAction="http://tempuri.org/CheckVerion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendtMiner">
+      <soap12:operation soapAction="http://tempuri.org/SendtMiner" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

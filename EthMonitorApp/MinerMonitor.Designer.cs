@@ -139,7 +139,7 @@
             this.btnAbout.ForeColor = System.Drawing.Color.SteelBlue;
             this.btnAbout.Image = global::EthMonitorApp.Properties.Resources.about_32_2;
             this.btnAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAbout.Location = new System.Drawing.Point(392, 237);
+            this.btnAbout.Location = new System.Drawing.Point(393, 237);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(110, 48);
             this.btnAbout.TabIndex = 9;
@@ -153,7 +153,7 @@
             this.btnStop.ForeColor = System.Drawing.Color.SteelBlue;
             this.btnStop.Image = global::EthMonitorApp.Properties.Resources.stop_32;
             this.btnStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnStop.Location = new System.Drawing.Point(267, 237);
+            this.btnStop.Location = new System.Drawing.Point(272, 237);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(110, 48);
             this.btnStop.TabIndex = 8;
@@ -188,6 +188,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.RoyalBlue;
             this.label6.Location = new System.Drawing.Point(174, 21);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(282, 25);
