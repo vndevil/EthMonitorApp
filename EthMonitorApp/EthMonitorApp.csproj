@@ -101,12 +101,24 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddMiners.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddMiners.Designer.cs">
+      <DependentUpon>AddMiners.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="MinerMonitor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MinerMonitor.Designer.cs">
       <DependentUpon>MinerMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MinersList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MinersList.Designer.cs">
+      <DependentUpon>MinersList.cs</DependentUpon>
     </Compile>
     <Compile Include="MonitorObject.cs" />
     <Compile Include="Program.cs" />
@@ -121,8 +133,14 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AddMiners.resx">
+      <DependentUpon>AddMiners.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MinerMonitor.resx">
       <DependentUpon>MinerMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MinersList.resx">
+      <DependentUpon>MinersList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

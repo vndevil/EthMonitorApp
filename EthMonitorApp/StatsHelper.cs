@@ -10,7 +10,7 @@ namespace EthMonitorApp
         private const int STATS_TIME = 2; // Minutes
 
         public static DateTime StatsDate { set; get; }
-        private static WebClient client = new WebClient();
+        private static readonly WebClient client = new WebClient();
 
         public static bool CheckEthWallet(string wallet)
         {

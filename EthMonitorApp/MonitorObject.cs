@@ -9,6 +9,7 @@ namespace EthMonitorApp
         public MonitorObject()
         {
             CreatedDate = StatsDate = DateTime.Now;
+            Algorithm = "ETH";
         }
 
         public string Email;
@@ -16,6 +17,11 @@ namespace EthMonitorApp
         public string Name;
         public DateTime CreatedDate;
         public DateTime StatsDate;
+
+        /// <summary>
+        /// ZEC hoặc ETH
+        /// </summary>
+        public string Algorithm;
     }
 
     public class MinerStats

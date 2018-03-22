@@ -13,7 +13,8 @@ namespace EthMonitorApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MinerMonitor());
+            //Application.Run(new MinerMonitor());
+            Application.Run(new MinersList());
 
             StatsHelper.StatsDate = DateTime.Now;
         }

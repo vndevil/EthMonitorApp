@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace EthMonitorApp
 {
-    public partial class MinerMonitor : Form
+    public partial class MinersList : Form
     {
         #region Fields
 
@@ -22,13 +22,11 @@ namespace EthMonitorApp
         private Thread thMonitor, thCommand;
         readonly WebClient client = new WebClient();
         readonly MonitorServicesSoapClient monitorService = new MonitorServicesSoapClient("MonitorServicesSoap");
-        private readonly string DataFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Data.dll";
+        private readonly string DataFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Data_ETH.dll";
 
         #endregion
 
-        #region Contructors
-
-        public MinerMonitor()
+        public MinersList()
         {
             InitializeComponent();
 
@@ -37,26 +35,10 @@ namespace EthMonitorApp
             MaximizeBox = false;
         }
 
-        #endregion
-
         #region Methods
-
-        delegate void SetGridViewDataSourceDelegate(string result);
-
-        private void SetTextBoxData(string result)
-        {
-            if (InvokeRequired)
-                Invoke(new SetGridViewDataSourceDelegate(SetTextBoxData), result);
-            else
-            {
-                txtContent.AppendText(Environment.NewLine + result);
-            }
-        }
 
         public void RunningApp(bool isStart)
         {
-            txtContent.Text = string.Empty;
-
             if (isStart)
             {
                 txtHost.Enabled = false;
@@ -81,12 +63,15 @@ namespace EthMonitorApp
 
         private bool IsCurrentVersion(out string currentVersion)
         {
-            // Check version
-            currentVersion = monitorService.CheckVerion();
+            //            // Check version
+            //            currentVersion = monitorService.CheckVerion();
+            //
+            //            // true: đúng phiên bản
+            //            // false: sai phiên bản
+            //            return APP_VERSION == currentVersion;
 
-            // true: đúng phiên bản
-            // false: sai phiên bản
-            return APP_VERSION == currentVersion;
+            currentVersion = "V-Miner Monitor 1.0";
+            return true;
         }
 
         private void AlertVersion(string currentVersion)
@@ -159,53 +144,62 @@ namespace EthMonitorApp
                         File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
 
                         miner = StatsHelper.GetStatsFromEthermine(miner);
+
+                        // Monitor Workers
+                        var i = 1;
+                        while (true)
+                        {
+                            var host = txtHost.Text.Replace("http://", string.Empty);
+                            var port = txtPort.Text;
+                            var content = client.DownloadString("http://" + host + ":" + port);
+                            //var content = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "test.txt");
+                            var html = new HtmlAgilityPack.HtmlDocument();
+                            html.LoadHtml(content);
+                            var doc = html.DocumentNode;
+                            if (doc != null)
+                            {
+                                // Lấy dữ liệu MinerInfo
+                                // Lấy danh sách dòng
+                                var arrTrs = doc.QuerySelectorAll("tr").ToList();
+
+                                // Xóa cột th
+                                arrTrs.RemoveAt(0);
+
+                                var arrWorkers =
+                                    arrTrs.Select(node => node.QuerySelectorAll("td").ToList()).Select(arrCols => new Worker
+                                    {
+                                        Name = ConvertHelper.ToString(arrCols[0].InnerText),
+                                        Ip = ConvertHelper.ToString(arrCols[1].InnerText),
+                                        RunningTime = ConvertHelper.ToString(arrCols[2].InnerText),
+                                        EthereumStats = ConvertHelper.ToString(arrCols[3].InnerText),
+                                        DcrInfo = ConvertHelper.ToString(arrCols[4].InnerText),
+                                        GpuTemperature = ConvertHelper.ToString(arrCols[5].InnerText),
+                                        Pool = ConvertHelper.ToString(arrCols[6].InnerText),
+                                        Version = ConvertHelper.ToString(arrCols[7].InnerText),
+                                        Comments = ConvertHelper.ToString(arrCols[8].InnerText),
+                                        CreatedDate = DateTime.Now
+                                    }).ToList();
+
+                                // Bind dữ liệu vào Grid
+                                if (arrWorkers.Any())
+                                {
+                                    gvData_ETH.AutoGenerateColumns = true;
+                                    gvData_ETH.DataSource = arrWorkers;
+                                }
+
+                                miner.Workers = arrWorkers.ToArray();
+                                var minerUniqueName = monitorService.SendtMiner(miner);
+                                linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerUniqueName.ToLower();
+
+                                Thread.Sleep(SLEEP_TIME_MONITOR);
+                                i++;
+                            }
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    SetTextBoxData($"Error \"{ex.Message}\" when get data from Ethermine.org with wallet: {miner.Wallet}");
-                }
 
-                // Monitor Workers
-                var i = 1;
-                while (true)
-                {
-                    var host = txtHost.Text.Replace("http://", string.Empty);
-                    var port = txtPort.Text;
-                    var content = client.DownloadString("http://" + host + ":" + port);
-                    //var content = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "test.txt");
-                    var html = new HtmlAgilityPack.HtmlDocument();
-                    html.LoadHtml(content);
-                    var doc = html.DocumentNode;
-
-                    // Lấy dữ liệu MinerInfo
-                    // Lấy danh sách dòng
-                    var arrTrs = doc.QuerySelectorAll("tr").ToList();
-
-                    // Xóa cột th
-                    arrTrs.RemoveAt(0);
-
-                    var arrWorkers =
-                        arrTrs.Select(node => node.QuerySelectorAll("td").ToList()).Select(arrCols => new Worker
-                        {
-                            Name = arrCols[0].InnerText,
-                            Ip = arrCols[1].InnerText,
-                            RunningTime = arrCols[2].InnerText,
-                            EthereumStats = arrCols[3].InnerText,
-                            DcrInfo = arrCols[4].InnerText,
-                            GpuTemperature = arrCols[5].InnerText,
-                            Pool = arrCols[6].InnerText,
-                            Version = arrCols[7].InnerText,
-                            Comments = arrCols[8].InnerText,
-                            CreatedDate = DateTime.Now
-                        }).ToList();
-
-                    miner.Workers = arrWorkers.ToArray();
-                    var minerUniqueName = monitorService.SendtMiner(miner);
-                    linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerUniqueName.ToLower();
-                    SetTextBoxData($"{i}. Sent infomation miner '{miner.Name}' and {arrWorkers.Count} workers to EthMonitor.NET successful at {DateTime.Now}");
-                    Thread.Sleep(SLEEP_TIME_MONITOR);
-                    i++;
                 }
             }
             catch (Exception ex)
@@ -217,9 +211,7 @@ namespace EthMonitorApp
 
         #endregion
 
-        #region Form Events
-
-        private void MinerMonitor_Load(object sender, EventArgs e)
+        private void MinersList_Load(object sender, EventArgs e)
         {
             Text = @"V-Miner Monitor 1.0 | ethmonitor.net - zecmonitor.net";
             txtName.Select();
@@ -247,21 +239,6 @@ namespace EthMonitorApp
             {
                 AlertVersion(currentVersion);
             }
-        }
-
-        private void MinerMonitor_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            thMonitor?.Abort();
-            thCommand?.Abort();
-        }
-
-        #endregion
-
-        #region User Events
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(linkLabel1.Text));
         }
 
         private void btnMonitor_Click(object sender, EventArgs e)
@@ -304,8 +281,7 @@ namespace EthMonitorApp
                         else
                         {
                             txtWallet.Select();
-                            MessageBox.Show(this, @"Your ETH Wallet not found on Ethermine.org !!!", @"Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(this, @"Your ETH Wallet not found on Ethermine.org !!!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
@@ -325,20 +301,5 @@ namespace EthMonitorApp
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void btnStop_Click(object sender, EventArgs e)
-        {
-            RunningApp(false);
-            thMonitor.Abort();
-            thCommand.Abort();
-        }
-
-        private void btnAbout_Click(object sender, EventArgs e)
-        {
-            var aboutForm = new About { MaximizeBox = false };
-            aboutForm.ShowDialog();
-        }
-
-        #endregion
     }
 }
