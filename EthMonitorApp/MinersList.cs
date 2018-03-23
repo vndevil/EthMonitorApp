@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,9 @@ namespace EthMonitorApp
         #region Fields
 
         const string APP_VERSION = "1.2";
+        /// <summary>
+        /// 15 giây
+        /// </summary>
         const int SLEEP_TIME_MONITOR = 15000; // Miliseconds
         const int SLEEP_TIME_COMMAND = 60000; // Miliseconds
 
@@ -26,6 +30,8 @@ namespace EthMonitorApp
 
         #endregion
 
+        #region Contructors
+
         public MinersList()
         {
             InitializeComponent();
@@ -35,7 +41,21 @@ namespace EthMonitorApp
             MaximizeBox = false;
         }
 
+        #endregion
+
         #region Methods
+
+        delegate void SetGridViewDataSourceDelegate(string result);
+
+        private void SetTextBoxData(string result)
+        {
+            if (InvokeRequired)
+                Invoke(new SetGridViewDataSourceDelegate(SetTextBoxData), result);
+            else
+            {
+                txtEthash.AppendText(Environment.NewLine + result);
+            }
+        }
 
         public void RunningApp(bool isStart)
         {
@@ -132,74 +152,98 @@ namespace EthMonitorApp
                 };
 
                 // Stats from ethermine.org
-                try
+                var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
+                if (obj != null)
                 {
-                    var obj = JsonConvert.DeserializeObject<MonitorObject>(ConvertHelper.ToString(File.ReadAllText(DataFilePath)));
-                    if (obj != null)
+                    // Ghi nhớ thời gian Stats
+                    //                    obj.StatsDate = DateTime.Now;
+                    //                    File.Delete(DataFilePath);
+                    //                    File.Create(DataFilePath).Close();
+                    //                    File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
+
+                    // Monitor Workers
+                    var i = 1;
+                    while (true)
                     {
-                        // Ghi nhớ thời gian Stats
-                        obj.StatsDate = DateTime.Now;
-                        File.Delete(DataFilePath);
-                        File.Create(DataFilePath).Close();
-                        File.WriteAllText(DataFilePath, JsonConvert.SerializeObject(obj));
-
+                        // Lấy thông tin Stats từ Ethermine
+                        var host = txtHost.Text.Replace("http://", string.Empty);
+                        var port = txtPort.Text;
                         miner = StatsHelper.GetStatsFromEthermine(miner);
+                        var content = client.DownloadString("http://" + host + ":" + port);
+                        //var content = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "test.txt");
+                        var html = new HtmlAgilityPack.HtmlDocument();
 
-                        // Monitor Workers
-                        var i = 1;
-                        while (true)
+                        html.LoadHtml(content);
+                        var doc = html.DocumentNode;
+                        // Lấy dữ liệu MinerInfo
+                        // Lấy danh sách dòng
+                        if (doc?.QuerySelectorAll("tr") != null)
                         {
-                            var host = txtHost.Text.Replace("http://", string.Empty);
-                            var port = txtPort.Text;
-                            var content = client.DownloadString("http://" + host + ":" + port);
-                            //var content = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "test.txt");
-                            var html = new HtmlAgilityPack.HtmlDocument();
-                            html.LoadHtml(content);
-                            var doc = html.DocumentNode;
-                            if (doc != null)
-                            {
-                                // Lấy dữ liệu MinerInfo
-                                // Lấy danh sách dòng
-                                var arrTrs = doc.QuerySelectorAll("tr").ToList();
+                            var arrTrs = doc.QuerySelectorAll("tr").ToList();
 
-                                // Xóa cột th
-                                arrTrs.RemoveAt(0);
+                            // Xóa cột th
+                            arrTrs.RemoveAt(0);
 
-                                var arrWorkers =
-                                    arrTrs.Select(node => node.QuerySelectorAll("td").ToList()).Select(arrCols => new Worker
-                                    {
-                                        Name = ConvertHelper.ToString(arrCols[0].InnerText),
-                                        Ip = ConvertHelper.ToString(arrCols[1].InnerText),
-                                        RunningTime = ConvertHelper.ToString(arrCols[2].InnerText),
-                                        EthereumStats = ConvertHelper.ToString(arrCols[3].InnerText),
-                                        DcrInfo = ConvertHelper.ToString(arrCols[4].InnerText),
-                                        GpuTemperature = ConvertHelper.ToString(arrCols[5].InnerText),
-                                        Pool = ConvertHelper.ToString(arrCols[6].InnerText),
-                                        Version = ConvertHelper.ToString(arrCols[7].InnerText),
-                                        Comments = ConvertHelper.ToString(arrCols[8].InnerText),
-                                        CreatedDate = DateTime.Now
-                                    }).ToList();
-
-                                // Bind dữ liệu vào Grid
-                                if (arrWorkers.Any())
+                            var arrWorkers =
+                                arrTrs.Select(node => node.QuerySelectorAll("td").ToList()).Select(arrCols => new Worker
                                 {
-                                    gvData_ETH.AutoGenerateColumns = true;
-                                    gvData_ETH.DataSource = arrWorkers;
-                                }
+                                    Name = ConvertHelper.ToString(arrCols[0].InnerText),
+                                    Ip = ConvertHelper.ToString(arrCols[1].InnerText),
+                                    RunningTime = ConvertHelper.ToString(arrCols[2].InnerText),
+                                    EthereumStats = ConvertHelper.ToString(arrCols[3].InnerText),
+                                    DcrInfo = ConvertHelper.ToString(arrCols[4].InnerText),
+                                    GpuTemperature = ConvertHelper.ToString(arrCols[5].InnerText),
+                                    Pool = ConvertHelper.ToString(arrCols[6].InnerText),
+                                    Version = ConvertHelper.ToString(arrCols[7].InnerText),
+                                    Comments = ConvertHelper.ToString(arrCols[8].InnerText),
+                                    CreatedDate = DateTime.Now
+                                }).ToList();
 
-                                miner.Workers = arrWorkers.ToArray();
-                                var minerUniqueName = monitorService.SendtMiner(miner);
-                                linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerUniqueName.ToLower();
+                            // Bind dữ liệu vào Grid
+                            var dt = new DataTable();
+                            dt.Columns.Add("Name");
+                            dt.Columns.Add("Ip");
+                            dt.Columns.Add("RunningTime");
+                            dt.Columns.Add("EthereumStats");
+                            dt.Columns.Add("DcrInfo");
+                            dt.Columns.Add("GpuTemperature");
+                            dt.Columns.Add("Pool");
+                            dt.Columns.Add("Version");
+                            dt.Columns.Add("Comments");
+                            dt.Columns.Add("CreatedDate");
 
-                                Thread.Sleep(SLEEP_TIME_MONITOR);
-                                i++;
+                            foreach (var worker in arrWorkers)
+                            {
+                                var row = dt.NewRow();
+
+                                row["Name"] = worker.Name;
+                                row["Ip"] = worker.Ip;
+                                row["RunningTime"] = worker.RunningTime;
+                                row["EthereumStats"] = worker.EthereumStats;
+                                row["DcrInfo"] = worker.DcrInfo;
+                                row["GpuTemperature"] = worker.GpuTemperature;
+                                row["Pool"] = worker.Pool;
+                                row["Version"] = worker.Version;
+                                row["Comments"] = worker.Comments;
+                                row["CreatedDate"] = worker.CreatedDate;
+                                dt.Rows.Add(row);
                             }
+                            gvData_ETH.AutoGenerateColumns = false;
+                            gvData_ETH.DataSource = dt;
+                            gvData_ETH.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
+
+                            // Gửi dữ liệu lên website
+                            miner.Workers = arrWorkers.ToArray();
+                            var minerUniqueName = monitorService.SendtMiner(miner);
+                            linkLabel1.Text = @"http://ethmonitor.net/miners/" + minerUniqueName.ToLower();
+
+                            SetTextBoxData($"{i}. Sent infomation miner '{miner.Name}' and {arrWorkers.Count} workers to EthMonitor.NET successful at {DateTime.Now}");
+                            i++;
+
+                            // Sleep tiến trình
+                            Thread.Sleep(SLEEP_TIME_MONITOR);
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-
                 }
             }
             catch (Exception ex)
@@ -211,9 +255,11 @@ namespace EthMonitorApp
 
         #endregion
 
+        #region Form Events
+
         private void MinersList_Load(object sender, EventArgs e)
         {
-            Text = @"V-Miner Monitor 1.0 | ethmonitor.net - zecmonitor.net";
+            Text = lblAppTitle.Text = @"V-Miner Monitor 1.2 | EthMonitor.NET - ZecMonitor.NET";
             txtName.Select();
 
             string currentVersion;
@@ -240,6 +286,16 @@ namespace EthMonitorApp
                 AlertVersion(currentVersion);
             }
         }
+
+        private void MinersList_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            thMonitor?.Abort();
+            thCommand?.Abort();
+        }
+
+        #endregion
+
+        #region User Events
 
         private void btnMonitor_Click(object sender, EventArgs e)
         {
@@ -301,5 +357,20 @@ namespace EthMonitorApp
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            RunningApp(false);
+            thMonitor.Abort();
+            thCommand.Abort();
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new About { MaximizeBox = false };
+            aboutForm.ShowDialog();
+        }
+
+        #endregion
     }
 }

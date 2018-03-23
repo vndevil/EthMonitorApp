@@ -38,54 +38,62 @@ namespace EthMonitorApp
 
         public static MinerInfo GetStatsFromEthermine(MinerInfo minerInfo)
         {
-            var timeSpan = DateTime.Now - StatsDate;
-            if (timeSpan.Minutes > STATS_TIME)
+            try
             {
-                // Đặt lại thời gian
-                StatsDate = DateTime.Now;
-
-                // History
-                string url = $"/miner/{minerInfo.Wallet}/history";
-                var data = GetApiData("https://api.ethermine.org" + url);
-                var historyStats = JsonConvert.DeserializeObject<HistoryReturnData>(data);
-                minerInfo.History = historyStats.data.ToArray();
-
-                // currentStats
-                url = $"/miner/{minerInfo.Wallet}/currentStats";
-                data = GetApiData("https://api.ethermine.org" + url);
-                var minerStats = JsonConvert.DeserializeObject<StatsReturnData>(data);
-                minerInfo.Stats = minerStats.data;
-
-                // Rounds
-                url = $"/miner/{minerInfo.Wallet}/rounds";
-                data = GetApiData("https://api.ethermine.org" + url);
-                var rounds = JsonConvert.DeserializeObject<RoundReturnData>(data);
-                minerInfo.Rounds = rounds.data.ToArray();
-
-                // Payouts
-                url = $"/miner/{minerInfo.Wallet}/payouts";
-                data = GetApiData("https://api.ethermine.org" + url);
-                var payouts = JsonConvert.DeserializeObject<PayoutReturnData>(data);
-                minerInfo.Payouts = payouts.data.ToArray();
-
-                // Settings
-                url = $"/miner/{minerInfo.Wallet}/settings";
-                data = GetApiData("https://api.ethermine.org" + url);
-                MinerSettings settings;
-                if (!data.Contains("NO DATA"))
+                var timeSpan = DateTime.Now - StatsDate;
+                if (timeSpan.Minutes > STATS_TIME)
                 {
-                    settings = JsonConvert.DeserializeObject<SettingsReturnData>(data).data;
-                }
-                else
-                {
-                    settings = new MinerSettings
+                    // Đặt lại thời gian
+                    StatsDate = DateTime.Now;
+
+                    // History
+                    string url = $"/miner/{minerInfo.Wallet}/history";
+                    var data = GetApiData("https://api.ethermine.org" + url);
+                    var historyStats = JsonConvert.DeserializeObject<HistoryReturnData>(data);
+                    minerInfo.History = historyStats.data.ToArray();
+
+                    // currentStats
+                    url = $"/miner/{minerInfo.Wallet}/currentStats";
+                    data = GetApiData("https://api.ethermine.org" + url);
+                    var minerStats = JsonConvert.DeserializeObject<StatsReturnData>(data);
+                    minerInfo.Stats = minerStats.data;
+
+                    // Rounds
+                    url = $"/miner/{minerInfo.Wallet}/rounds";
+                    data = GetApiData("https://api.ethermine.org" + url);
+                    var rounds = JsonConvert.DeserializeObject<RoundReturnData>(data);
+                    minerInfo.Rounds = rounds.data.ToArray();
+
+                    // Payouts
+                    url = $"/miner/{minerInfo.Wallet}/payouts";
+                    data = GetApiData("https://api.ethermine.org" + url);
+                    var payouts = JsonConvert.DeserializeObject<PayoutReturnData>(data);
+                    minerInfo.Payouts = payouts.data.ToArray();
+
+                    // Settings
+                    url = $"/miner/{minerInfo.Wallet}/settings";
+                    data = GetApiData("https://api.ethermine.org" + url);
+                    MinerSettings settings;
+                    if (!data.Contains("NO DATA"))
                     {
-                        minPayout = 1,
-                    };
+                        settings = JsonConvert.DeserializeObject<SettingsReturnData>(data).data;
+                    }
+                    else
+                    {
+                        settings = new MinerSettings
+                        {
+                            minPayout = 1,
+                        };
+                    }
+                    minerInfo.Settings = settings;
                 }
-                minerInfo.Settings = settings;
             }
-            
+            catch
+            {
+                
+
+            }
+
             return minerInfo;
         }
     }
