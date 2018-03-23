@@ -39,6 +39,8 @@ namespace EthMonitorApp
             thMonitor = new Thread(SendData) { IsBackground = true };
             thCommand = new Thread(GetCommands) { IsBackground = true };
             MaximizeBox = false;
+
+            gvData_ETH.ScrollBars = ScrollBars.Both;
         }
 
         #endregion
@@ -141,6 +143,18 @@ namespace EthMonitorApp
         {
             try
             {
+                // Cấu hình GridView
+                var dt = new DataTable();
+                dt.Columns.Add("WorkerName");
+                dt.Columns.Add("Ip");
+                dt.Columns.Add("RunningTime");
+                dt.Columns.Add("EthereumStats");
+                dt.Columns.Add("DcrInfo");
+                dt.Columns.Add("GpuTemperature");
+                dt.Columns.Add("Pool");
+                dt.Columns.Add("Version");
+                dt.Columns.Add("Comments");
+
                 // New MinerInfo
                 var miner = new MinerInfo
                 {
@@ -199,38 +213,43 @@ namespace EthMonitorApp
                                     CreatedDate = DateTime.Now
                                 }).ToList();
 
+
                             // Bind dữ liệu vào Grid
-                            var dt = new DataTable();
-                            dt.Columns.Add("Name");
-                            dt.Columns.Add("Ip");
-                            dt.Columns.Add("RunningTime");
-                            dt.Columns.Add("EthereumStats");
-                            dt.Columns.Add("DcrInfo");
-                            dt.Columns.Add("GpuTemperature");
-                            dt.Columns.Add("Pool");
-                            dt.Columns.Add("Version");
-                            dt.Columns.Add("Comments");
-                            dt.Columns.Add("CreatedDate");
-
-                            foreach (var worker in arrWorkers)
+                            if (gvData_ETH.Rows.Count == 0)
                             {
-                                var row = dt.NewRow();
+                                foreach (var worker in arrWorkers)
+                                {
+                                    var row = dt.NewRow();
 
-                                row["Name"] = worker.Name;
-                                row["Ip"] = worker.Ip;
-                                row["RunningTime"] = worker.RunningTime;
-                                row["EthereumStats"] = worker.EthereumStats;
-                                row["DcrInfo"] = worker.DcrInfo;
-                                row["GpuTemperature"] = worker.GpuTemperature;
-                                row["Pool"] = worker.Pool;
-                                row["Version"] = worker.Version;
-                                row["Comments"] = worker.Comments;
-                                row["CreatedDate"] = worker.CreatedDate;
-                                dt.Rows.Add(row);
+                                    row["WorkerName"] = worker.Name;
+                                    row["Ip"] = worker.Ip;
+                                    row["RunningTime"] = worker.RunningTime;
+                                    row["EthereumStats"] = worker.EthereumStats;
+                                    row["DcrInfo"] = worker.DcrInfo;
+                                    row["GpuTemperature"] = worker.GpuTemperature;
+                                    row["Pool"] = worker.Pool;
+                                    row["Version"] = worker.Version;
+                                    row["Comments"] = worker.Comments;
+                                    dt.Rows.Add(row);
+                                }
+                                gvData_ETH.DataSource = dt;
                             }
-                            gvData_ETH.AutoGenerateColumns = false;
-                            gvData_ETH.DataSource = dt;
-                            gvData_ETH.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
+                            else
+                            {
+                                for (var j = 0; j < gvData_ETH.Rows.Count; j++)
+                                {
+                                    gvData_ETH.Rows[j].Cells["WorkerName"].Value = arrWorkers[j].Name;
+                                    gvData_ETH.Rows[j].Cells["Ip"].Value = arrWorkers[j].Ip;
+                                    gvData_ETH.Rows[j].Cells["RunningTime"].Value = arrWorkers[j].RunningTime;
+                                    gvData_ETH.Rows[j].Cells["EthereumStats"].Value = arrWorkers[j].EthereumStats;
+                                    gvData_ETH.Rows[j].Cells["DcrInfo"].Value = arrWorkers[j].DcrInfo;
+                                    gvData_ETH.Rows[j].Cells["GpuTemperature"].Value = arrWorkers[j].GpuTemperature;
+                                    gvData_ETH.Rows[j].Cells["Pool"].Value = arrWorkers[j].Pool;
+                                    gvData_ETH.Rows[j].Cells["Version"].Value = arrWorkers[j].Version;
+                                    gvData_ETH.Rows[j].Cells["Comments"].Value = arrWorkers[j].Comments;
+                                }
+                            }
+
 
                             // Gửi dữ liệu lên website
                             miner.Workers = arrWorkers.ToArray();

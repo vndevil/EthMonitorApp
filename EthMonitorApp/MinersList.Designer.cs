@@ -202,9 +202,12 @@
             // 
             // gvData_ETH
             // 
+            this.gvData_ETH.AllowUserToAddRows = false;
+            this.gvData_ETH.AllowUserToDeleteRows = false;
             this.gvData_ETH.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvData_ETH.Location = new System.Drawing.Point(291, 89);
             this.gvData_ETH.Name = "gvData_ETH";
+            this.gvData_ETH.ReadOnly = true;
             this.gvData_ETH.Size = new System.Drawing.Size(586, 252);
             this.gvData_ETH.TabIndex = 34;
             // 
